@@ -3,11 +3,9 @@ package com.stupica.testClient;
 import com.stupica.ConstGlobal;
 import com.stupica.GlobalVar;
 import com.stupica.bcacheclient.BCacheMap;
+import com.stupica.bcacheclient.BCacheService;
 import com.stupica.core.UtilCommon;
 
-import java.net.MalformedURLException;
-import java.rmi.Naming;
-import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
 
@@ -15,6 +13,8 @@ public class MainRun {
 
     int     aiNumberOfElementMax = 1000000;
     String  sMapName01 = "map01";
+
+    BCacheService objBCache = null;
 
     /**
      * Main object instance variable;
@@ -62,15 +62,9 @@ public class MainRun {
         iResult = ConstGlobal.RETURN_OK;
         //iResult = super.run();
 
-        try {
-            objCache = (BCacheMap) Naming.lookup("//localhost:13211/" + BCacheMap.sUrlRmiBCacheMap);
-        } catch (NotBoundException e) {
-            e.printStackTrace();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
+        objBCache = new BCacheService();
+        //iResult = objBCache.connect();
+        objCache = objBCache.getCache();
         if (objCache == null) {
             iResult = ConstGlobal.RETURN_ERROR;
         }

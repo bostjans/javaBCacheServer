@@ -25,12 +25,17 @@
 
     <!-- library dependencies -->
     <dependencies>
-        <!--
         <dependency>
             <groupId>com.stupica.base</groupId>
-            <artifactId>cacheCore</artifactId>
+            <artifactId>globalVar</artifactId>
             <version>[1,2)</version>
         </dependency>
+        <dependency>
+            <groupId>com.stupica.bCache</groupId>
+            <artifactId>bCacheInterface</artifactId>
+            <version>[0.1,2)</version>
+        </dependency>
+        <!--
         -->
     </dependencies>
 
