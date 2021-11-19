@@ -37,13 +37,14 @@ public class CacheTest01 {
 
     @AfterEach
     public void tearDown() throws Exception {
+        client.shutdown();
     }
 
     /**
      * https://ria101.wordpress.com/2011/12/12/concurrenthashmap-avoid-a-common-misuse/
      * https://www.fatalerrors.org/a/0N581Do.html
      */
-    @DisplayName("Add large number of Objects - #11")
+    @DisplayName("Hazelcast: Add large number of Objects - #11")
     @Test
     public void add11() {
         boolean             bResult = false;

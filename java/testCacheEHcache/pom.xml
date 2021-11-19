@@ -4,10 +4,10 @@
 
     <!-- project coordinates .. -->
     <groupId>com.stupica.bCache</groupId>
-    <artifactId>bCacheProject</artifactId>
+    <artifactId>testCacheEHcache</artifactId>
     <version>0.1.0</version>
-    <packaging>pom</packaging>
-    <name>bCacheServer</name>
+    <packaging>jar</packaging>
+    <name>testCacheEHcache</name>
     <organization>
         <name>developer.stupica.com</name>
         <url>http://www.stupica.com</url>
@@ -18,19 +18,43 @@
         <java-version>1.8</java-version>
         <maven.compiler.source>${java-version}</maven.compiler.source>
         <maven.compiler.target>${java-version}</maven.compiler.target>
-
-        <!-- ID identifier - in settings.xml: servers -->
-        <project.scm.id>github</project.scm.id>
     </properties>
 
-	<modules>
-        <module>bCacheInterface</module>
-        <module>bCacheServer</module>
-        <module>bCacheClient</module>
-        <module>bCacheTestClient01</module>
-        <module>testCacheEHcache</module>
-        <module>testCacheHz</module>
-	</modules>
+    <!-- library dependencies -->
+    <dependencies>
+        <!--
+        -->
+        <dependency>
+            <groupId>org.ehcache</groupId>
+            <artifactId>ehcache</artifactId>
+            <version>[3.9,4)</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>[5.8,6)</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.2.0</version>
+                <configuration>
+                    <archive>
+                        <manifestEntries>
+                            <Implementation-Version>${project.version}</Implementation-Version>
+                            <Specification-Version>${project.version}</Specification-Version>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
     <developers>
         <developer>
