@@ -3,11 +3,13 @@ package com.stupica.bcacheserver;
 
 import com.stupica.ConstGlobal;
 import com.stupica.GlobalVar;
+import com.stupica.bcache.BCacheListImpl;
 import com.stupica.bcache.BCacheMapImpl;
+import com.stupica.bcacheclient.BCacheList;
 import com.stupica.bcacheclient.BCacheMap;
 import com.stupica.cache.BCache;
+import com.stupica.cache.BStoreList;
 import com.stupica.core.UtilCommon;
-import com.stupica.core.UtilString;
 import com.stupica.mainRunner.MainRunBase;
 import jargs.gnu.CmdLineParser;
 
@@ -38,9 +40,10 @@ public class MainRun extends MainRunBase {
     CmdLineParser.Option obj_op_maxTime = null;
     CmdLineParser.Option obj_op_port = null;
 
-    //private String	        sUrlRmi = "BCacheMap";
-    private BCacheMapImpl   objServer = null;
-    private BCacheMap       objStub = null;
+    private BCacheMapImpl   objServerMap = null;
+    private BCacheListImpl  objServerList = null;
+    private BCacheMap       objStubMap = null;
+    private BCacheList      objStubList = null;
     private Registry        objRegistry = null;
 
 
@@ -197,7 +200,8 @@ public class MainRun extends MainRunBase {
         // Check previous step
         if (iResult == ConstGlobal.RETURN_OK) {
             try {
-                objServer = new BCacheMapImpl();
+                objServerMap = new BCacheMapImpl();
+                objServerList = new BCacheListImpl();
             } catch (RemoteException e) {
                 sTemp = "Error at server initialization ..  -  Result: " + iResult + ";"
                         + " Msg.: " + e.getMessage();
@@ -210,7 +214,8 @@ public class MainRun extends MainRunBase {
         // Check previous step
         if (iResult == ConstGlobal.RETURN_OK) {
             try {
-                objStub = (BCacheMap) UnicastRemoteObject.exportObject((BCacheMap)objServer, iPort + 1);
+                objStubMap = (BCacheMap) UnicastRemoteObject.exportObject((BCacheMap)objServerMap, iPort + 1);
+                objStubList = (BCacheList) UnicastRemoteObject.exportObject((BCacheList)objServerList, iPort + 1);
                 objRegistry = LocateRegistry.createRegistry(iPort);
             } catch (RemoteException e) {
                 sTemp = "Error at server initialization ..  -  Result: " + iResult + ";"
@@ -225,7 +230,8 @@ public class MainRun extends MainRunBase {
         if (iResult == ConstGlobal.RETURN_OK) {
             if (objRegistry != null) {
                 try {
-                    objRegistry.rebind(BCacheMap.sUrlRmiBCacheMap, objStub);
+                    objRegistry.rebind(BCacheMap.sUrlRmiNameBCache, objStubMap);
+                    objRegistry.rebind(BCacheList.sUrlRmiNameBCache, objStubList);
                 } catch (RemoteException e) {
                     sTemp = "Error at server initialization - reBind ..  -  Result: " + iResult + ";"
                             + " Msg.: " + e.getMessage();
@@ -256,7 +262,8 @@ public class MainRun extends MainRunBase {
 
         if (objRegistry != null)
             try {
-                objRegistry.unbind(BCacheMap.sUrlRmiBCacheMap);
+                objRegistry.unbind(BCacheMap.sUrlRmiNameBCache);
+                objRegistry.unbind(BCacheList.sUrlRmiNameBCache);
             } catch (RemoteException e) {
                 iResult = ConstGlobal.RETURN_ERROR;
                 sTemp = "Error at server cleanUp - unBind ..  -  Result: " + iResult + ";"
@@ -272,9 +279,20 @@ public class MainRun extends MainRunBase {
                 logger.severe("runAfter(): " + sTemp);
                 e.printStackTrace();
             }
-        if (objServer != null)
+        if (objServerMap != null)
             try {
-                UnicastRemoteObject.unexportObject(objServer, true);
+                UnicastRemoteObject.unexportObject(objServerMap, true);
+            } catch (NoSuchObjectException e) {
+                iResult = ConstGlobal.RETURN_ERROR;
+                sTemp = "Error at server cleanUp - unExport ..  -  Result: " + iResult + ";"
+                        + " Msg.: " + e.getMessage();
+                msgInfo("runAfter(): " + sTemp);
+                logger.severe("runAfter(): " + sTemp);
+                e.printStackTrace();
+            }
+        if (objServerList != null)
+            try {
+                UnicastRemoteObject.unexportObject(objServerList, true);
             } catch (NoSuchObjectException e) {
                 iResult = ConstGlobal.RETURN_ERROR;
                 sTemp = "Error at server cleanUp - unExport ..  -  Result: " + iResult + ";"
@@ -323,23 +341,42 @@ public class MainRun extends MainRunBase {
 
         // Check previous step
         if (iResult == ConstGlobal.RETURN_OK) {
-            if (objServer == null) {
-                msgWarn("runLoopCycle(): No server running (null).");
+            if (objServerMap == null) {
+                msgWarn("runLoopCycle(): No server(map) running (null).");
             }
-            if (objServer.mapCache == null) {
-                msgInfo("runLoopCycle(): No data (null).");
+            if (objServerMap.mapCache == null) {
+                msgInfo("runLoopCycle(): Map: No data (null).");
             } else {
-                sTemp = "Num. of maps: " + objServer.mapCache.size()
-                        + "; maps: " + objServer.mapCache.keySet();
-                if (objServer.mapCache.keySet().size() > 0) {
+                sTemp = "Num. of maps: " + objServerMap.mapCache.size()
+                        + "; maps: " + objServerMap.mapCache.keySet();
+                if (objServerMap.mapCache.keySet().size() > 0) {
                     sTemp += "";
                 }
-                for (String sLoop : objServer.mapCache.keySet()) {
-                    BCache objCache = objServer.mapCache.get(sLoop);
+                for (String sLoop : objServerMap.mapCache.keySet()) {
+                    BCache objCache = objServerMap.mapCache.get(sLoop);
                     sTemp += "\n> ";
                     sTemp += "{" + sLoop + ": " + objCache.toStringShort() + "}";
                 }
-                msgInfo("runLoopCycle(): " + sTemp);
+                msgInfo("runLoopCycle(map): " + sTemp);
+            }
+            //
+            if (objServerList == null) {
+                msgWarn("runLoopCycle(): No server(list) running (null).");
+            }
+            if (objServerList.mapCache == null) {
+                msgInfo("runLoopCycle(): List: No data (null).");
+            } else {
+                sTemp = "Num. of lists: " + objServerList.mapCache.size()
+                        + "; lists: " + objServerList.mapCache.keySet();
+                if (objServerList.mapCache.keySet().size() > 0) {
+                    sTemp += "";
+                }
+                for (String sLoop : objServerList.mapCache.keySet()) {
+                    BStoreList objCache = objServerList.mapCache.get(sLoop);
+                    sTemp += "\n> ";
+                    sTemp += "{" + sLoop + ": " + objCache.toStringShort() + "}";
+                }
+                msgInfo("runLoopCycle(list): " + sTemp);
             }
         }
         return iResult;

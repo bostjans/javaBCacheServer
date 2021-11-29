@@ -2,11 +2,13 @@ package com.stupica.testClient;
 
 import com.stupica.ConstGlobal;
 import com.stupica.GlobalVar;
+import com.stupica.bcacheclient.BCacheList;
 import com.stupica.bcacheclient.BCacheMap;
 import com.stupica.bcacheclient.BCacheService;
 import com.stupica.core.UtilCommon;
 
 import java.rmi.RemoteException;
+import java.util.logging.Logger;
 
 
 public class MainRun {
@@ -20,6 +22,8 @@ public class MainRun {
      * Main object instance variable;
      */
     private static MainRun objInstance;
+
+    private static Logger logger = Logger.getLogger(MainRun.class.getName());
 
 
     /**
@@ -57,18 +61,31 @@ public class MainRun {
         // Local variables
         int         iResult;
         BCacheMap   objCache = null;
+        BCacheList  objCacheList = null;
 
         // Initialization
         iResult = ConstGlobal.RETURN_OK;
         //iResult = super.run();
 
         objBCache = new BCacheService();
+        objBCache.sPort = "13111";
         //iResult = objBCache.connect();
         objCache = objBCache.getCache();
         if (objCache == null) {
+            logger.severe("run(): Error at getting Cache reference - map!");
             iResult = ConstGlobal.RETURN_ERROR;
         }
         UtilCommon.sleepFoxMillis(1000 * 1);
+
+        // Check previous step
+        if (iResult == ConstGlobal.RETURN_OK) {
+            objCacheList = objBCache.getCacheList();
+            if (objCacheList == null) {
+                logger.severe("run(): Error at getting Cache reference - list!");
+                iResult = ConstGlobal.RETURN_ERROR;
+            }
+            UtilCommon.sleepFoxMillis(1000 * 1);
+        }
 
         // Check previous step
         if (iResult == ConstGlobal.RETURN_OK) {
@@ -80,8 +97,8 @@ public class MainRun {
     public void add11(BCacheMap aobjCache) {
         // Local variables
         int         iResult;
-        boolean bResult = false;
-        long    dtStart, dtStartLoop;
+        boolean     bResult = false;
+        long        dtStart, dtStartLoop;
 
         // Initialization
         iResult = ConstGlobal.RETURN_OK;
@@ -105,7 +122,7 @@ public class MainRun {
                 aobjCache.setMaxSize(sMapName01,aiNumberOfElementMax + 1);
                 aobjCache.clear(sMapName01);
                 for (long i = 1L; i < aiNumberOfElementMax + 1; i++) {
-                    bResult = aobjCache.add(sMapName01, Long.valueOf(i).toString(), "String" + Long.valueOf(i).toString(), 1000 * 60 * 12);
+                    bResult = aobjCache.add(sMapName01, Long.valueOf(i).toString(), "String" + Long.valueOf(i).toString(), 1000 * 60 * 2);
                     if (!bResult) {
                         System.out.println("Fail to add! .. after add: " + i + " > size: " + aobjCache.size(sMapName01));
                         break;

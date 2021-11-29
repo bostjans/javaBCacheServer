@@ -11,7 +11,7 @@ LOG_CONF=$PATH_PROG/properties/logging.properties
 
 VMparam="-server -Xms264m -Xmx986m"
 VMparam="-Djava.util.logging.config.file=$LOG_CONF $VMparam"
-VMparam="-Dapp.path.config=/home/lenko12/bin/lenkoTrader/properties $VMparam"
+#VMparam="-Dapp.path.config=/home/lenko12/bin/lenkoTrader/properties $VMparam"
 
 java $VMparam -jar $PATH_PROG/bCacheServer-0.1.0.jar -v
 

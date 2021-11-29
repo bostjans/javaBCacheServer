@@ -6,7 +6,8 @@ import java.rmi.RemoteException;
 
 public interface BCacheMap extends Remote {
 
-    static String	sUrlRmiBCacheMap = "BCacheMap";
+    static String	sUrlRmiNameBCache = "BCacheMap";
+
 
     void setMaxSize(String asId, long anCountOfElementsMax) throws RemoteException;
 

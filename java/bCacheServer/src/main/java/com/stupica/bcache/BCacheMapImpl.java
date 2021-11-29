@@ -1,6 +1,5 @@
 package com.stupica.bcache;
 
-import com.stupica.ConstGlobal;
 import com.stupica.bcacheclient.BCacheMap;
 import com.stupica.cache.BCache;
 import com.stupica.cache.MemoryBCache;
@@ -10,7 +9,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 
-public class BCacheMapImpl implements BCacheMap {
+public class BCacheMapImpl extends BCacheBase implements BCacheMap {
 //public class BCacheMapImpl extends UnicastRemoteObject implements BCacheMap {
 
     public Map<String, BCache> mapCache = null;
@@ -35,14 +34,6 @@ public class BCacheMapImpl implements BCacheMap {
             mapCache.put(asId, objCache);
         }
         return objCache;
-    }
-
-
-    public int ping() {
-        return ConstGlobal.RETURN_OK;
-    }
-    public int ping(int aiVal) {
-        return aiVal;
     }
 
 
