@@ -28,7 +28,7 @@ public class BCacheMapImpl extends BCacheBase implements BCacheMap {
 
         if (mapCache == null)
             mapCache = new ConcurrentHashMap<>();
-        objCache = (BCache) mapCache.get(asId);
+        objCache = mapCache.get(asId);
         if (objCache == null) {
             objCache = new MemoryBCache();
             mapCache.put(asId, objCache);
@@ -45,35 +45,35 @@ public class BCacheMapImpl extends BCacheBase implements BCacheMap {
     }
 
 
-    public boolean add(String asId, String asKey, Object aobjValue, long aiPeriodInMillis) {
+    public <T> boolean add(String asId, T atKey, Object aobjValue, long aiPeriodInMillis) {
         BCache objCache = getCache(asId);
 
         if (objCache == null)
             return false;
-        return objCache.add(asKey, aobjValue, aiPeriodInMillis);
+        return objCache.add(atKey, aobjValue, aiPeriodInMillis);
     }
 
-    public boolean addNotExist(String asId, String asKey, Object aobjValue, long aiPeriodInMillis) {
+    public <T> boolean addNotExist(String asId, T atKey, Object aobjValue, long aiPeriodInMillis) {
         BCache objCache = getCache(asId);
 
         if (objCache == null)
             return false;
-        return objCache.addNotExist(asKey, aobjValue, aiPeriodInMillis);
+        return objCache.addNotExist(atKey, aobjValue, aiPeriodInMillis);
     }
 
-    public void remove(String asId, String asKey) {
+    public <T> void remove(String asId, T atKey) {
         BCache objCache = getCache(asId);
 
         if (objCache != null)
-            objCache.remove(asKey);
+            objCache.remove(atKey);
     }
 
-    public Object get(String asId, String asKey) {
+    public <T> Object get(String asId, T atKey) {
         BCache objCache = getCache(asId);
 
         if (objCache == null)
             return null;
-        return objCache.get(asKey);
+        return objCache.get(atKey);
     }
 
     public void clear(String asId) {

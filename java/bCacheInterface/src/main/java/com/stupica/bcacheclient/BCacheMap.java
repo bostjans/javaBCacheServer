@@ -14,12 +14,12 @@ public interface BCacheMap extends Remote {
     int ping() throws RemoteException;
     int ping(int aiVal) throws RemoteException;
 
-    boolean add(String asId, String asKey, Object aobjValue, long aiPeriodInMillis) throws RemoteException;
-    boolean addNotExist(String asId, String asKey, Object aobjValue, long aiPeriodInMillis) throws RemoteException;
+    <T> boolean add(String asId, T atKey, Object aobjValue, long aiPeriodInMillis) throws RemoteException;
+    <T> boolean addNotExist(String asId, T atKey, Object aobjValue, long aiPeriodInMillis) throws RemoteException;
 
-    void remove(String asId, String asKey) throws RemoteException;
+    <T> void remove(String asId, T atKey) throws RemoteException;
 
-    Object get(String asId, String asKey) throws RemoteException;
+    <T> Object get(String asId, T atKey) throws RemoteException;
 
     void clear(String asId) throws RemoteException;
 
