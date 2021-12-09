@@ -5,7 +5,7 @@
     <!-- project coordinates .. -->
     <groupId>com.stupica.bCache</groupId>
     <artifactId>bCacheInterface</artifactId>
-    <version>0.1.0</version>
+    <version>0.2.0</version>
     <packaging>jar</packaging>
     <name>bCacheInterface</name>
     <organization>
@@ -33,22 +33,6 @@
         </dependency>
         -->
     </dependencies>
-
-    <repositories>
-        <!-- stupica.com - Developer404 Release Repository - ->
-        <repository>
-            <id>bDevRelease</id>
-            <name>Developer404 Repository</name>
-            <url>http://developer.stupica.com/maven</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-        </repository>
-        -->
-    </repositories>
 
     <build>
         <plugins>

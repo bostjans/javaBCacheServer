@@ -12,8 +12,17 @@ import java.util.logging.Logger;
 
 public class BCacheService {
 
+    public static final int      nPERIOD_01min_InMILLIS = 1000 * 60 * 01;
+    public static final int      nPERIOD_05min_InMILLIS = 1000 * 60 * 05;
+    public static final int      nPERIOD_10min_InMILLIS = 1000 * 60 * 10;
+    public static final int      nPERIOD_20min_InMILLIS = 1000 * 60 * 20;
+    public static final int      nPERIOD_30min_InMILLIS = 1000 * 60 * 30;
+
     public String       sHost = "localhost";
-    public String       sPort = "13211";
+    public String       sPort = "13111";
+
+    private long        nTsPingLast = 0L;
+    private final long  nTsPingDelta = 1000 * 2L;
 
     private BCacheMap   objCache = null;
     private BCacheList  objCacheList = null;
@@ -26,12 +35,17 @@ public class BCacheService {
         int         iResult;
 
         if (objCache != null) {
-            try {
-                if (objCache.ping() == ConstGlobal.RETURN_OK)
-                    return objCache;
-            } catch (RemoteException e) {
-                e.printStackTrace();
-            }
+            if (System.currentTimeMillis() - nTsPingLast > nTsPingDelta) {
+                nTsPingLast = System.currentTimeMillis();
+                try {
+                    if (objCache.ping() == ConstGlobal.RETURN_OK)
+                        return objCache;
+                } catch (RemoteException e) {
+                    //if (GlobalVar.bIsModeVerbose)
+                    e.printStackTrace();
+                }
+            } else
+                return objCache;
         }
         iResult = connect(BCacheMap.sUrlRmiNameBCache);
         if (iResult != ConstGlobal.RETURN_OK) {
@@ -44,12 +58,16 @@ public class BCacheService {
         int         iResult;
 
         if (objCacheList != null) {
-            try {
-                if (objCacheList.ping() == ConstGlobal.RETURN_OK)
-                    return objCacheList;
-            } catch (RemoteException e) {
-                e.printStackTrace();
-            }
+            if (System.currentTimeMillis() - nTsPingLast > nTsPingDelta) {
+                nTsPingLast = System.currentTimeMillis();
+                try {
+                    if (objCacheList.ping() == ConstGlobal.RETURN_OK)
+                        return objCacheList;
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+            } else
+                return objCacheList;
         }
         iResult = connect(BCacheList.sUrlRmiNameBCache);
         if (iResult != ConstGlobal.RETURN_OK) {
@@ -102,21 +120,7 @@ public class BCacheService {
     }
     public int connect(String asService) {
         return connectService(asService);
-    } /*
-    public int connect() {
-        // Local variables
-        int         iResult;
-
-        // Initialization
-
-        iResult = connectService(BCacheMap.sUrlRmiNameBCache);
-
-        // Check previous step
-        if (iResult == ConstGlobal.RETURN_OK) {
-            iResult = connectService(BCacheMap.sUrlRmiNameBCache);
-        }
-        return iResult;
-    } */
+    }
 
     public int disconnect() {
         objCache = null;
