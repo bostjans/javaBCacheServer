@@ -1,3 +1,5 @@
+[![CI-Maven-BCacheServer](https://github.com/bostjans/javaBCacheServer/actions/workflows/maven.yml/badge.svg)](https://github.com/bostjans/javaBCacheServer/actions/workflows/maven.yml)
+
 # javaBCacheServer
 Java (B)Cache server > to serve/centralize cache.
 
