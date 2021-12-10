@@ -32,8 +32,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, do not need to create;
         with:
-          tag_name: r0_2_1
-          release_name: Release_0.2.1
+          tag_name: r0_2_2
+          release_name: Release_0.2.2
           body: |
             Release - ${{ github.ref }}
             Alpha Build.

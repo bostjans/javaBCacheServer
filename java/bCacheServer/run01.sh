@@ -1,7 +1,6 @@
 #!/bin/sh
 
 # This ..
-#
 
 PROG_DIR=.
 #PROG_DIR=target
@@ -11,9 +10,9 @@ LOG_CONF=$PATH_PROG/properties/logging.properties
 
 VMparam="-server -Xms264m -Xmx986m"
 VMparam="-Djava.util.logging.config.file=$LOG_CONF $VMparam"
-#VMparam="-Dapp.path.config=/home/lenko12/bin/lenkoTrader/properties $VMparam"
+#VMparam="-Dapp.path.config=/home/bcache/bin/bCache/properties $VMparam"
 
-java $VMparam -jar $PATH_PROG/bCacheServer-0.1.0.jar -v
+java $VMparam -jar $PATH_PROG/bCacheServer-0.2.2.jar -v
 
 echo That_s it.
 
