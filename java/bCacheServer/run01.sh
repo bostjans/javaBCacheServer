@@ -2,8 +2,8 @@
 
 # This ..
 
-$PATH_PROG=.
-#$PATH_PROG=target
+PATH_PROG=.
+#PATH_PROG=target
 PATH_LOG=$PATH_PROG/log
 
 LOG_CONF=$PATH_PROG/properties/logging.properties
