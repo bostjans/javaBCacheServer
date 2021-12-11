@@ -1,6 +1,5 @@
 package com.stupica.bcacheserver;
 
-
 import com.stupica.ConstGlobal;
 import com.stupica.GlobalVar;
 import com.stupica.bcache.BCacheListImpl;
@@ -11,6 +10,7 @@ import com.stupica.cache.BCache;
 import com.stupica.cache.BStoreList;
 import com.stupica.core.UtilCommon;
 import com.stupica.mainRunner.MainRunBase;
+
 import jargs.gnu.CmdLineParser;
 
 import java.rmi.NoSuchObjectException;
@@ -53,7 +53,7 @@ public class MainRun extends MainRunBase {
     public static void main(String[] a_args) {
         // Initialization
         GlobalVar.getInstance().sProgName = "bCacheServer";
-        GlobalVar.getInstance().sVersionBuild = "011";
+        GlobalVar.getInstance().sVersionBuild = "012";
 
         // Generate main program class
         objInstance = new MainRun();
@@ -90,8 +90,10 @@ public class MainRun extends MainRunBase {
         //bLockFileAllowMoreInstance = true;
         bIsProcessInLoop = true;
         iMaxNumOfLoops = 0;
-        iPauseBetweenLoop = 1000 * 11;
+        iPauseBetweenLoop = 1000 * 12;
         iPauseAtStart = 1000;               // Pause before (actual) start processing;
+        bShouldWriteLoopInfo2stdOut = false;
+        bShouldWriteLoopInfo2log = true;
     }
 
 
@@ -345,7 +347,11 @@ public class MainRun extends MainRunBase {
                 msgWarn("runLoopCycle(): No server(map) running (null).");
             }
             if (objServerMap.mapCache == null) {
-                msgInfo("runLoopCycle(): Map: No data (null).");
+                sTemp = "runLoopCycle(): Map: No data (null).";
+                if (bShouldWriteLoopInfo2stdOut)
+                    msgInfo(sTemp);
+                if (bShouldWriteLoopInfo2log)
+                    logger.info(sTemp);
             } else {
                 sTemp = "Num. of maps: " + objServerMap.mapCache.size()
                         + "; maps: " + objServerMap.mapCache.keySet();
@@ -357,14 +363,21 @@ public class MainRun extends MainRunBase {
                     sTemp += "\n> ";
                     sTemp += "{" + sLoop + ": " + objCache.toStringShort() + "}";
                 }
-                msgInfo("runLoopCycle(map): " + sTemp);
+                if (bShouldWriteLoopInfo2stdOut)
+                    msgInfo("runLoopCycle(map): " + sTemp);
+                if (bShouldWriteLoopInfo2log)
+                    logger.info("runLoopCycle(map): " + sTemp);
             }
             //
             if (objServerList == null) {
                 msgWarn("runLoopCycle(): No server(list) running (null).");
             }
             if (objServerList.mapCache == null) {
-                msgInfo("runLoopCycle(): List: No data (null).");
+                sTemp = "runLoopCycle(): List: No data (null).";
+                if (bShouldWriteLoopInfo2stdOut)
+                    msgInfo(sTemp);
+                if (bShouldWriteLoopInfo2log)
+                    logger.info(sTemp);
             } else {
                 sTemp = "Num. of lists: " + objServerList.mapCache.size()
                         + "; lists: " + objServerList.mapCache.keySet();
@@ -376,7 +389,10 @@ public class MainRun extends MainRunBase {
                     sTemp += "\n> ";
                     sTemp += "{" + sLoop + ": " + objCache.toStringShort() + "}";
                 }
-                msgInfo("runLoopCycle(list): " + sTemp);
+                if (bShouldWriteLoopInfo2stdOut)
+                    msgInfo("runLoopCycle(list): " + sTemp);
+                if (bShouldWriteLoopInfo2log)
+                    logger.info("runLoopCycle(list): " + sTemp);
             }
         }
         return iResult;
