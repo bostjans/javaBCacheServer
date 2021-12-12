@@ -5,7 +5,9 @@ import com.stupica.cache.BCache;
 import com.stupica.cache.MemoryBCache;
 
 import java.rmi.RemoteException;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 
@@ -74,6 +76,21 @@ public class BCacheMapImpl extends BCacheBase implements BCacheMap {
         if (objCache == null)
             return null;
         return objCache.get(atKey);
+    }
+    public Map getMap(String asId) {
+        Map objMap = null;
+        Set objKeys = null;
+        BCache objCache = getCache(asId);
+
+        if (objCache != null)
+            objKeys = objCache.getKeyAll();
+        if (objKeys != null) {
+            objMap = new HashMap();
+            for (Object objLoop : objKeys) {
+                objMap.put(objLoop, objCache.get(objLoop));
+            }
+        }
+        return objMap;
     }
 
     public void clear(String asId) {

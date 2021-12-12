@@ -13,7 +13,7 @@ VMparam="-server -Xms264m -Xmx986m"
 VMparam="-Djava.util.logging.config.file=$LOG_CONF $VMparam"
 #VMparam="-Dapp.path.config=/home/bcache/bin/bCache/properties $VMparam"
 
-java $VMparam -jar $PATH_PROG/bCacheServer-0.2.5.jar -v
+java $VMparam -jar $PATH_PROG/bCacheServer-0.3.0.jar -v
 
 echo That_s it.
 
