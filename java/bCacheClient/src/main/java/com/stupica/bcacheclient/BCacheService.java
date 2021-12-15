@@ -17,6 +17,12 @@ public class BCacheService {
     public static final int      nPERIOD_10min_InMILLIS = 1000 * 60 * 10;
     public static final int      nPERIOD_20min_InMILLIS = 1000 * 60 * 20;
     public static final int      nPERIOD_30min_InMILLIS = 1000 * 60 * 30;
+    public static final int      nPERIOD_01hour_InMILLIS = 1000 * 60 * 60;
+    public static final int      nPERIOD_02hour_InMILLIS = 1000 * 60 * 60 * 2;
+    public static final int      nPERIOD_03hour_InMILLIS = 1000 * 60 * 60 * 3;
+    public static final int      nPERIOD_06hour_InMILLIS = 1000 * 60 * 60 * 6;
+    public static final int      nPERIOD_01day_InMILLIS = 1000 * 60 * 60 * 24;
+    public static final int      nPERIOD_01week_InMILLIS = 1000 * 60 * 60 * 24 * 7;
 
     public String       sHost = "localhost";
     public String       sPort = "13111";
