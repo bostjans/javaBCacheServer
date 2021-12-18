@@ -43,6 +43,7 @@ public class BCacheListImpl extends BCacheBase implements BCacheList {
     public boolean add(String asId, Object aobjValue, long aiPeriodInMillis) {
         BStoreList objCache = getCache(asId);
 
+        nCountCalls.incrementAndGet();
         if (objCache == null)
             return false;
         return objCache.add(aobjValue, aiPeriodInMillis);
@@ -51,6 +52,7 @@ public class BCacheListImpl extends BCacheBase implements BCacheList {
     public void remove(String asId, int aiIndex) {
         BStoreList objCache = getCache(asId);
 
+        nCountCalls.incrementAndGet();
         if (objCache != null)
             objCache.remove(aiIndex);
     }
@@ -58,6 +60,7 @@ public class BCacheListImpl extends BCacheBase implements BCacheList {
     public Object get(String asId, int aiIndex) {
         BStoreList objCache = getCache(asId);
 
+        nCountCalls.incrementAndGet();
         if (objCache == null)
             return null;
         return objCache.get(aiIndex);
@@ -65,6 +68,7 @@ public class BCacheListImpl extends BCacheBase implements BCacheList {
     public List getList(String asId) {
         BStoreList objCache = getCache(asId);
 
+        nCountCalls.incrementAndGet();
         if (objCache == null)
             return null;
         return objCache.getList();
@@ -73,6 +77,7 @@ public class BCacheListImpl extends BCacheBase implements BCacheList {
     public void clear(String asId) {
         BStoreList objCache = getCache(asId);
 
+        nCountCalls.incrementAndGet();
         if (objCache != null)
             objCache.clear();
     }
@@ -80,6 +85,7 @@ public class BCacheListImpl extends BCacheBase implements BCacheList {
     public long size(String asId) {
         BStoreList objCache = getCache(asId);
 
+        nCountCalls.incrementAndGet();
         if (objCache == null)
             return 0L;
         return objCache.size();

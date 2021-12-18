@@ -53,7 +53,7 @@ public class MainRun extends MainRunBase {
     public static void main(String[] a_args) {
         // Initialization
         GlobalVar.getInstance().sProgName = "bCacheServer";
-        GlobalVar.getInstance().sVersionBuild = "012";
+        GlobalVar.getInstance().sVersionBuild = "015";
 
         // Generate main program class
         objInstance = new MainRun();
@@ -354,7 +354,9 @@ public class MainRun extends MainRunBase {
                     logger.info(sTemp);
             } else {
                 sTemp = "Num. of maps: " + objServerMap.mapCache.size()
-                        + "; maps: " + objServerMap.mapCache.keySet();
+                        + "; maps: " + objServerMap.mapCache.keySet()
+                        + "; calls: " + objServerMap.getCountCalls()
+                        + "; pings: " + objServerMap.getCountPing();
                 if (objServerMap.mapCache.keySet().size() > 0) {
                     sTemp += "";
                 }
@@ -380,7 +382,9 @@ public class MainRun extends MainRunBase {
                     logger.info(sTemp);
             } else {
                 sTemp = "Num. of lists: " + objServerList.mapCache.size()
-                        + "; lists: " + objServerList.mapCache.keySet();
+                        + "; lists: " + objServerList.mapCache.keySet()
+                        + "; calls: " + objServerList.getCountCalls()
+                        + "; pings: " + objServerList.getCountPing();
                 if (objServerList.mapCache.keySet().size() > 0) {
                     sTemp += "";
                 }

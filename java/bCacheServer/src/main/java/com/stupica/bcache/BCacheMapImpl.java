@@ -50,6 +50,7 @@ public class BCacheMapImpl extends BCacheBase implements BCacheMap {
     public <T> boolean add(String asId, T atKey, Object aobjValue, long aiPeriodInMillis) {
         BCache objCache = getCache(asId);
 
+        nCountCalls.incrementAndGet();
         if (objCache == null)
             return false;
         return objCache.add(atKey, aobjValue, aiPeriodInMillis);
@@ -58,6 +59,7 @@ public class BCacheMapImpl extends BCacheBase implements BCacheMap {
     public <T> boolean addNotExist(String asId, T atKey, Object aobjValue, long aiPeriodInMillis) {
         BCache objCache = getCache(asId);
 
+        nCountCalls.incrementAndGet();
         if (objCache == null)
             return false;
         return objCache.addNotExist(atKey, aobjValue, aiPeriodInMillis);
@@ -66,6 +68,7 @@ public class BCacheMapImpl extends BCacheBase implements BCacheMap {
     public <T> void remove(String asId, T atKey) {
         BCache objCache = getCache(asId);
 
+        nCountCalls.incrementAndGet();
         if (objCache != null)
             objCache.remove(atKey);
     }
@@ -73,6 +76,7 @@ public class BCacheMapImpl extends BCacheBase implements BCacheMap {
     public <T> Object get(String asId, T atKey) {
         BCache objCache = getCache(asId);
 
+        nCountCalls.incrementAndGet();
         if (objCache == null)
             return null;
         return objCache.get(atKey);
@@ -82,6 +86,7 @@ public class BCacheMapImpl extends BCacheBase implements BCacheMap {
         Set objKeys = null;
         BCache objCache = getCache(asId);
 
+        nCountCalls.incrementAndGet();
         if (objCache != null)
             objKeys = objCache.getKeyAll();
         if (objKeys != null) {
@@ -96,6 +101,7 @@ public class BCacheMapImpl extends BCacheBase implements BCacheMap {
     public void clear(String asId) {
         BCache objCache = getCache(asId);
 
+        nCountCalls.incrementAndGet();
         if (objCache != null)
             objCache.clear();
     }
@@ -103,6 +109,7 @@ public class BCacheMapImpl extends BCacheBase implements BCacheMap {
     public long size(String asId) {
         BCache objCache = getCache(asId);
 
+        nCountCalls.incrementAndGet();
         if (objCache == null)
             return 0L;
         return objCache.size();
