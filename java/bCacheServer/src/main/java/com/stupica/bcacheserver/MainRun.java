@@ -47,7 +47,7 @@ public class MainRun extends MainRunBase {
     private BCacheList      objStubList = null;
     private Registry        objRegistry = null;
 
-    private static Logger logger = Logger.getLogger(MainRun.class.getName());
+    private static Logger logger = null;
 
 
     /**
@@ -56,7 +56,9 @@ public class MainRun extends MainRunBase {
     public static void main(String[] a_args) {
         // Initialization
         GlobalVar.getInstance().sProgName = "bCacheServer";
-        GlobalVar.getInstance().sVersionBuild = "016";
+        GlobalVar.getInstance().sVersionBuild = "017";
+        // Ref.:
+        logger = Logger.getLogger(GlobalVar.getInstance().sProgName);
 
         // Generate main program class
         objInstance = new MainRun();
