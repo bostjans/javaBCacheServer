@@ -57,7 +57,7 @@ public class MainRun extends MainRunBase {
         // Initialization
         GlobalVar.getInstance().sProgName = "bCacheServer";
         GlobalVar.getInstance().sVersionBuild = "017";
-        // Ref.:
+        // Ref.: https://stackoverflow.com/questions/6314285/java-util-logging-stops-working-after-a-while
         logger = Logger.getLogger(GlobalVar.getInstance().sProgName);
 
         // Generate main program class
