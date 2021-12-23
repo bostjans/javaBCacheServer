@@ -21,6 +21,7 @@ public interface BCacheMap extends Remote {
     <T> void remove(String asId, T atKey) throws RemoteException;
 
     <T> Object get(String asId, T atKey) throws RemoteException;
+    Object[] getKeyList(String asId) throws RemoteException;
     Map getMap(String asId) throws RemoteException;
 
     void clear(String asId) throws RemoteException;

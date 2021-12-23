@@ -81,6 +81,18 @@ public class BCacheMapImpl extends BCacheBase implements BCacheMap {
             return null;
         return objCache.get(atKey);
     }
+    public Object[] getKeyList(String asId) {
+        Set objKeys = null;
+        BCache objCache = getCache(asId);
+
+        nCountCalls.incrementAndGet();
+        if (objCache != null)
+            objKeys = objCache.getKeyAll();
+        if (objKeys != null)
+            if (objKeys.size() > 0)
+                return objKeys.toArray();
+        return null;
+    }
     public Map getMap(String asId) {
         Map objMap = null;
         Set objKeys = null;

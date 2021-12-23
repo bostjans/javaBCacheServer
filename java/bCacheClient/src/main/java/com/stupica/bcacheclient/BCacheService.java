@@ -30,7 +30,7 @@ public class BCacheService {
     private long        nCountConnect = 0L;
     private long        nCountPingCall = 0L;
     private long        nTsPingLast = 0L;
-    private final long  nTsPingDelta = 1000 * 4L;
+    private final long  nTsPingDelta = 1000 * 7L;
 
     private BCacheMap   objCache = null;
     private BCacheList  objCacheList = null;
