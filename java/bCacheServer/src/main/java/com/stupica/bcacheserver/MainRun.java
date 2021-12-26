@@ -56,7 +56,7 @@ public class MainRun extends MainRunBase {
     public static void main(String[] a_args) {
         // Initialization
         GlobalVar.getInstance().sProgName = "bCacheServer";
-        GlobalVar.getInstance().sVersionBuild = "021";
+        GlobalVar.getInstance().sVersionBuild = "022";
         // Ref.: https://stackoverflow.com/questions/6314285/java-util-logging-stops-working-after-a-while
         logger = Logger.getLogger(GlobalVar.getInstance().sProgName);
 
@@ -95,7 +95,7 @@ public class MainRun extends MainRunBase {
         //bLockFileAllowMoreInstance = true;
         bIsProcessInLoop = true;
         iMaxNumOfLoops = 0;
-        iPauseBetweenLoop = 1000 * 12;
+        iPauseBetweenLoop = 1000 * 18;
         iPauseAtStart = 1000;               // Pause before (actual) start processing;
         bShouldWriteLoopInfo2stdOut = false;
         bShouldWriteLoopInfo2log = true;
@@ -360,7 +360,8 @@ public class MainRun extends MainRunBase {
             } else {
                 sTemp = "Num. of maps: " + objServerMap.mapCache.size()
                         + "; maps: " + objServerMap.mapCache.keySet()
-                        + "; calls: " + objServerMap.getCountCalls()
+                        + "; calls(all): " + objServerMap.getCountCalls()
+                        + "; calls(map): " + objServerMap.getCountMapCalls()
                         + "; pings: " + objServerMap.getCountPing();
                 if (objServerMap.mapCache.keySet().size() > 0) {
                     sTemp += "";
@@ -388,7 +389,8 @@ public class MainRun extends MainRunBase {
             } else {
                 sTemp = "Num. of lists: " + objServerList.mapCache.size()
                         + "; lists: " + objServerList.mapCache.keySet()
-                        + "; calls: " + objServerList.getCountCalls()
+                        + "; calls(all): " + objServerList.getCountCalls()
+                        + "; calls(list): " + objServerList.getCountListCalls()
                         + "; pings: " + objServerList.getCountPing();
                 if (objServerList.mapCache.keySet().size() > 0) {
                     sTemp += "";

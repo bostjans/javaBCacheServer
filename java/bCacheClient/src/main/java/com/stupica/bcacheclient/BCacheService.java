@@ -77,17 +77,6 @@ public class BCacheService {
         if (objCache != null) {
             if (pingCall(objCache, null) == ConstGlobal.RETURN_OK)
                 return objCache;
-//            if (System.currentTimeMillis() - nTsPingLast > nTsPingDelta) {
-//                nTsPingLast = System.currentTimeMillis();
-//                try {
-//                    if (objCache.ping() == ConstGlobal.RETURN_OK)
-//                        return objCache;
-//                } catch (RemoteException e) {
-//                    //if (GlobalVar.bIsModeVerbose)
-//                    e.printStackTrace();
-//                }
-//            } else
-//                return objCache;
         }
         iResult = connect(BCacheMap.sUrlRmiNameBCache);
         if (iResult != ConstGlobal.RETURN_OK) {

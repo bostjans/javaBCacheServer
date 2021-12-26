@@ -16,6 +16,7 @@ public interface BCacheList extends Remote {
     int ping(int aiVal) throws RemoteException;
 
     boolean add(String asId, Object aobjValue, long aiPeriodInMillis) throws RemoteException;
+    boolean add2begin(String asId, Object aobjValue, long aiPeriodInMillis) throws RemoteException;
 
     void remove(String asId, int aiIndex) throws RemoteException;
 

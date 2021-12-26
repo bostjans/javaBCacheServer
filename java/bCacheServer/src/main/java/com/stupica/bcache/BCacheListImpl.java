@@ -44,15 +44,26 @@ public class BCacheListImpl extends BCacheBase implements BCacheList {
         BStoreList objCache = getCache(asId);
 
         nCountCalls.incrementAndGet();
+        nCountListCalls.incrementAndGet();
         if (objCache == null)
             return false;
         return objCache.add(aobjValue, aiPeriodInMillis);
+    }
+    public boolean add2begin(String asId, Object aobjValue, long aiPeriodInMillis) {
+        BStoreList objCache = getCache(asId);
+
+        nCountCalls.incrementAndGet();
+        nCountListCalls.incrementAndGet();
+        if (objCache == null)
+            return false;
+        return objCache.add2begin(aobjValue, aiPeriodInMillis);
     }
 
     public void remove(String asId, int aiIndex) {
         BStoreList objCache = getCache(asId);
 
         nCountCalls.incrementAndGet();
+        nCountListCalls.incrementAndGet();
         if (objCache != null)
             objCache.remove(aiIndex);
     }
@@ -61,6 +72,7 @@ public class BCacheListImpl extends BCacheBase implements BCacheList {
         BStoreList objCache = getCache(asId);
 
         nCountCalls.incrementAndGet();
+        nCountListCalls.incrementAndGet();
         if (objCache == null)
             return null;
         return objCache.get(aiIndex);
@@ -69,6 +81,7 @@ public class BCacheListImpl extends BCacheBase implements BCacheList {
         BStoreList objCache = getCache(asId);
 
         nCountCalls.incrementAndGet();
+        nCountListCalls.incrementAndGet();
         if (objCache == null)
             return null;
         return objCache.getList();
@@ -78,6 +91,7 @@ public class BCacheListImpl extends BCacheBase implements BCacheList {
         BStoreList objCache = getCache(asId);
 
         nCountCalls.incrementAndGet();
+        nCountListCalls.incrementAndGet();
         if (objCache != null)
             objCache.clear();
     }
@@ -86,6 +100,7 @@ public class BCacheListImpl extends BCacheBase implements BCacheList {
         BStoreList objCache = getCache(asId);
 
         nCountCalls.incrementAndGet();
+        nCountListCalls.incrementAndGet();
         if (objCache == null)
             return 0L;
         return objCache.size();

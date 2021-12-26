@@ -51,6 +51,7 @@ public class BCacheMapImpl extends BCacheBase implements BCacheMap {
         BCache objCache = getCache(asId);
 
         nCountCalls.incrementAndGet();
+        nCountMapCalls.incrementAndGet();
         if (objCache == null)
             return false;
         return objCache.add(atKey, aobjValue, aiPeriodInMillis);
@@ -60,6 +61,7 @@ public class BCacheMapImpl extends BCacheBase implements BCacheMap {
         BCache objCache = getCache(asId);
 
         nCountCalls.incrementAndGet();
+        nCountMapCalls.incrementAndGet();
         if (objCache == null)
             return false;
         return objCache.addNotExist(atKey, aobjValue, aiPeriodInMillis);
@@ -69,6 +71,7 @@ public class BCacheMapImpl extends BCacheBase implements BCacheMap {
         BCache objCache = getCache(asId);
 
         nCountCalls.incrementAndGet();
+        nCountMapCalls.incrementAndGet();
         if (objCache != null)
             objCache.remove(atKey);
     }
@@ -77,6 +80,7 @@ public class BCacheMapImpl extends BCacheBase implements BCacheMap {
         BCache objCache = getCache(asId);
 
         nCountCalls.incrementAndGet();
+        nCountMapCalls.incrementAndGet();
         if (objCache == null)
             return null;
         return objCache.get(atKey);
@@ -86,6 +90,7 @@ public class BCacheMapImpl extends BCacheBase implements BCacheMap {
         BCache objCache = getCache(asId);
 
         nCountCalls.incrementAndGet();
+        nCountMapCalls.incrementAndGet();
         if (objCache != null)
             objKeys = objCache.getKeyAll();
         if (objKeys != null)
@@ -99,6 +104,7 @@ public class BCacheMapImpl extends BCacheBase implements BCacheMap {
         BCache objCache = getCache(asId);
 
         nCountCalls.incrementAndGet();
+        nCountMapCalls.incrementAndGet();
         if (objCache != null)
             objKeys = objCache.getKeyAll();
         if (objKeys != null) {
@@ -114,6 +120,7 @@ public class BCacheMapImpl extends BCacheBase implements BCacheMap {
         BCache objCache = getCache(asId);
 
         nCountCalls.incrementAndGet();
+        nCountMapCalls.incrementAndGet();
         if (objCache != null)
             objCache.clear();
     }
@@ -122,6 +129,7 @@ public class BCacheMapImpl extends BCacheBase implements BCacheMap {
         BCache objCache = getCache(asId);
 
         nCountCalls.incrementAndGet();
+        nCountMapCalls.incrementAndGet();
         if (objCache == null)
             return 0L;
         return objCache.size();
