@@ -11,6 +11,7 @@ public interface BCacheList extends Remote {
 
 
     void setMaxSize(String asId, long anCountOfElementsMax) throws RemoteException;
+    void setShouldDeleteOldest(String asId, boolean abVal) throws RemoteException;
 
     int ping() throws RemoteException;
     int ping(int aiVal) throws RemoteException;

@@ -38,6 +38,12 @@ public class BCacheListImpl extends BCacheBase implements BCacheList {
         if (objCache != null)
             objCache.setCountOfElementsMax(anCountOfElementsMax);
     }
+    public void setShouldDeleteOldest(String asId, boolean abVal) {
+        BStoreList objCache = getCache(asId);
+
+        if (objCache != null)
+            objCache.setShouldDeleteOldest(abVal);
+    }
 
 
     public boolean add(String asId, Object aobjValue, long aiPeriodInMillis) {
