@@ -56,7 +56,7 @@ public class MainRun extends MainRunBase {
     public static void main(String[] a_args) {
         // Initialization
         GlobalVar.getInstance().sProgName = "bCacheServer";
-        GlobalVar.getInstance().sVersionBuild = "023";
+        GlobalVar.getInstance().sVersionBuild = "024";
         // Ref.: https://stackoverflow.com/questions/6314285/java-util-logging-stops-working-after-a-while
         logger = Logger.getLogger(GlobalVar.getInstance().sProgName);
 
@@ -359,17 +359,19 @@ public class MainRun extends MainRunBase {
                     logger.info(sTemp);
             } else {
                 sTemp = "Num. of maps: " + objServerMap.mapCache.size()
-                        + "; maps: " + objServerMap.mapCache.keySet()
                         + "; calls(all): " + objServerMap.getCountCalls()
                         + "; calls(map): " + objServerMap.getCountMapCalls()
-                        + "; pings: " + objServerMap.getCountPing();
-                if (objServerMap.mapCache.keySet().size() > 0) {
-                    sTemp += "";
-                }
-                for (String sLoop : objServerMap.mapCache.keySet()) {
-                    BCache objCache = objServerMap.mapCache.get(sLoop);
-                    sTemp += "\n> ";
-                    sTemp += "{" + sLoop + ": " + objCache.toStringShort() + "}";
+                        + "; pings: " + objServerMap.getCountPing()
+                        + "\n\tmaps: " + objServerMap.mapCache.keySet();
+                if (aobjRefCountData.iCountLoop % 3 == 0) {
+                    //if (objServerMap.mapCache.keySet().size() > 0) {
+                    //    sTemp += "";
+                    //}
+                    for (String sLoop : objServerMap.mapCache.keySet()) {
+                        BCache objCache = objServerMap.mapCache.get(sLoop);
+                        sTemp += "\n> ";
+                        sTemp += "{" + sLoop + ": " + objCache.toStringShort() + "}";
+                    }
                 }
                 if (bShouldWriteLoopInfo2stdOut)
                     msgInfo("runLoopCycle(map): " + sTemp);
@@ -388,17 +390,19 @@ public class MainRun extends MainRunBase {
                     logger.info(sTemp);
             } else {
                 sTemp = "Num. of lists: " + objServerList.mapCache.size()
-                        + "; lists: " + objServerList.mapCache.keySet()
                         + "; calls(all): " + objServerList.getCountCalls()
                         + "; calls(list): " + objServerList.getCountListCalls()
-                        + "; pings: " + objServerList.getCountPing();
-                if (objServerList.mapCache.keySet().size() > 0) {
-                    sTemp += "";
-                }
-                for (String sLoop : objServerList.mapCache.keySet()) {
-                    BStoreList objCache = objServerList.mapCache.get(sLoop);
-                    sTemp += "\n> ";
-                    sTemp += "{" + sLoop + ": " + objCache.toStringShort() + "}";
+                        + "; pings: " + objServerList.getCountPing()
+                        + "\n\tlists: " + objServerList.mapCache.keySet();
+                if (aobjRefCountData.iCountLoop % 10 == 0) {
+                    //if (objServerList.mapCache.keySet().size() > 0) {
+                    //    sTemp += "";
+                    //}
+                    for (String sLoop : objServerList.mapCache.keySet()) {
+                        BStoreList objCache = objServerList.mapCache.get(sLoop);
+                        sTemp += "\n> ";
+                        sTemp += "{" + sLoop + ": " + objCache.toStringShort() + "}";
+                    }
                 }
                 if (bShouldWriteLoopInfo2stdOut)
                     msgInfo("runLoopCycle(list): " + sTemp);

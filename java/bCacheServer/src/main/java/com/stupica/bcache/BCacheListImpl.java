@@ -4,6 +4,7 @@ import com.stupica.bcacheclient.BCacheList;
 import com.stupica.cache.BStoreList;
 import com.stupica.cache.MemoryBList;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -63,6 +64,15 @@ public class BCacheListImpl extends BCacheBase implements BCacheList {
         if (objCache == null)
             return false;
         return objCache.add2begin(aobjValue, aiPeriodInMillis);
+    }
+    public boolean addAll(String asId, Collection aarrElement, long aiPeriodInMillis) {
+        BStoreList objCache = getCache(asId);
+
+        nCountCalls.incrementAndGet();
+        nCountListCalls.incrementAndGet();
+        if (objCache == null)
+            return false;
+        return objCache.addAll(aarrElement, aiPeriodInMillis);
     }
 
     public void remove(String asId, int aiIndex) {

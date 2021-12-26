@@ -15,7 +15,7 @@ VMparam="-Djava.util.logging.config.file=$LOG_CONF $VMparam"
 #VMparam="-Djava.rmi.server.codebase=file:///home/bcache/bin/bCache/dbModel-1.7.0.jar $VMparam"
 #VMparam="-Djava.rmi.server.useCodebaseOnly=false $VMparam"
 
-java $VMparam -jar $PATH_PROG/bCacheServer-0.5.1.jar -v
+java $VMparam -jar $PATH_PROG/bCacheServer-0.5.2.jar -v
 
 echo That_s it.
 
