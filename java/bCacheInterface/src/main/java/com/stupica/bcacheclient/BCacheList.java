@@ -24,7 +24,8 @@ public interface BCacheList extends Remote {
     void remove(String asId, int aiIndex) throws RemoteException;
 
     Object get(String asId, int aiIndex) throws RemoteException;
-    List getList(String asId) throws RemoteException;
+    //List getList(String asId) throws RemoteException;
+    List getValueAsList(String asId) throws RemoteException;
 
     void clear(String asId) throws RemoteException;
 

@@ -2,8 +2,10 @@ package com.stupica.bcache;
 
 import com.stupica.bcacheclient.BCacheList;
 import com.stupica.cache.BStoreList;
+import com.stupica.cache.CacheObject;
 import com.stupica.cache.MemoryBList;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -101,6 +103,21 @@ public class BCacheListImpl extends BCacheBase implements BCacheList {
         if (objCache == null)
             return null;
         return objCache.getList();
+    }
+    public List getValueAsList(String asId) {
+        List<Object>    arrList = null;
+        BStoreList      objCache = getCache(asId);
+
+        nCountCalls.incrementAndGet();
+        nCountListCalls.incrementAndGet();
+        if (objCache != null) {
+            arrList = new ArrayList<>();
+            for (Object objLoop : objCache.getList()) {
+                CacheObject objInCache = (CacheObject) objLoop;
+                arrList.add(objInCache.getValue());
+            }
+        }
+        return arrList;
     }
 
     public void clear(String asId) {
