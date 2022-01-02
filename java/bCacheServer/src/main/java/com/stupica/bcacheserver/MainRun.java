@@ -56,7 +56,7 @@ public class MainRun extends MainRunBase {
     public static void main(String[] a_args) {
         // Initialization
         GlobalVar.getInstance().sProgName = "bCacheServer";
-        GlobalVar.getInstance().sVersionBuild = "026";
+        GlobalVar.getInstance().sVersionBuild = "027";
         // Ref.: https://stackoverflow.com/questions/6314285/java-util-logging-stops-working-after-a-while
         logger = Logger.getLogger(GlobalVar.getInstance().sProgName);
 
@@ -395,9 +395,6 @@ public class MainRun extends MainRunBase {
                         + "; pings: " + objServerList.getCountPing()
                         + "\n\tlists: " + objServerList.mapCache.keySet();
                 if (aobjRefCountData.iCountLoop % 10 == 0) {
-                    //if (objServerList.mapCache.keySet().size() > 0) {
-                    //    sTemp += "";
-                    //}
                     for (String sLoop : objServerList.mapCache.keySet()) {
                         BStoreList objCache = objServerList.mapCache.get(sLoop);
                         sTemp += "\n> ";

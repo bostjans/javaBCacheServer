@@ -12,7 +12,7 @@
             <useDefaultExcludes>true</useDefaultExcludes>
             <outputDirectory>./</outputDirectory>
             <includes>
-                <include>bCacheServer-0.5.4.jar</include>
+                <include>bCacheServer.jar</include>
             </includes>
         </fileSet>
         <fileSet>

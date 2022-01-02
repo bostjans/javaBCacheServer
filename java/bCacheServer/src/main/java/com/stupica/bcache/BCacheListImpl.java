@@ -5,10 +5,7 @@ import com.stupica.cache.BStoreList;
 import com.stupica.cache.CacheObject;
 import com.stupica.cache.MemoryBList;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 
@@ -95,25 +92,32 @@ public class BCacheListImpl extends BCacheBase implements BCacheList {
             return null;
         return objCache.get(aiIndex);
     }
-    public List getList(String asId) {
+    private List getListInternal(String asId) {
         BStoreList objCache = getCache(asId);
 
-        nCountCalls.incrementAndGet();
-        nCountListCalls.incrementAndGet();
         if (objCache == null)
             return null;
         return objCache.getList();
     }
+    public List getList(String asId) {
+        nCountCalls.incrementAndGet();
+        nCountListCalls.incrementAndGet();
+        return getListInternal(asId);
+    }
     public List getValueAsList(String asId) {
+        List<Object>    arrListCache = null;
         List<Object>    arrList = null;
-        BStoreList      objCache = getCache(asId);
+        //BStoreList      objCache = getCache(asId);
 
         nCountCalls.incrementAndGet();
         nCountListCalls.incrementAndGet();
-        if (objCache != null) {
+        arrListCache = getListInternal(asId);
+        if (arrListCache != null) {
             arrList = new ArrayList<>();
-            for (Object objLoop : objCache.getList()) {
-                CacheObject objInCache = (CacheObject) objLoop;
+            //for (Object objLoop : objCache.getList()) {
+            for (Iterator<Object> iterator = arrListCache.iterator(); iterator.hasNext();) {
+                //CacheObject objInCache = (CacheObject) objLoop;
+                CacheObject objInCache = (CacheObject) iterator.next();
                 arrList.add(objInCache.getValue());
             }
         }

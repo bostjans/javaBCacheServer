@@ -25,15 +25,15 @@ jobs:
         with:
           repositories: '[{ "id": "bDev", "url": "https://developer.dev404.net/maven" }]'
       - name: Build with Maven
-        run: mvn -B package --file java/pom_actions.xml
+        run: mvn -B package --file java/pom.xml
       - name: CreateRelease
         id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, do not need to create;
         with:
-          tag_name: r0_5_4
-          release_name: Release_0.5.4
+          tag_name: r0_5_5
+          release_name: Release_0.5.5
           body: |
             Release - ${{ github.ref }}
             Alpha Build.

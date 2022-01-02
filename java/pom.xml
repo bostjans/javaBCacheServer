@@ -28,9 +28,22 @@
         <module>bCacheServer</module>
         <module>bCacheClient</module>
         <module>bCacheTestClient01</module>
-        <module>testCacheEHcache</module>
-        <module>testCacheHz</module>
 	</modules>
+
+    <profiles>
+        <profile>
+            <id>testCacheEHcache</id>
+            <modules>
+                <module>testCacheEHcache</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>testCacheHz</id>
+            <modules>
+                <module>testCacheHz</module>
+            </modules>
+        </profile>
+    </profiles>
 
     <developers>
         <developer>
