@@ -5,7 +5,7 @@
     <!-- project coordinates .. -->
     <groupId>com.stupica.bCache</groupId>
     <artifactId>bCacheServer</artifactId>
-    <version>0.5.5</version>
+    <version>0.5.6</version>
     <packaging>jar</packaging>
     <name>bCacheServer</name>
     <organization>

@@ -114,11 +114,13 @@ public class BCacheListImpl extends BCacheBase implements BCacheList {
         arrListCache = getListInternal(asId);
         if (arrListCache != null) {
             arrList = new ArrayList<>();
-            //for (Object objLoop : objCache.getList()) {
-            for (Iterator<Object> iterator = arrListCache.iterator(); iterator.hasNext();) {
-                //CacheObject objInCache = (CacheObject) objLoop;
-                CacheObject objInCache = (CacheObject) iterator.next();
-                arrList.add(objInCache.getValue());
+            synchronized(arrListCache) {
+                //for (Object objLoop : objCache.getList()) {
+                for (Iterator<Object> iterator = arrListCache.iterator(); iterator.hasNext();) {
+                    //CacheObject objInCache = (CacheObject) objLoop;
+                    CacheObject objInCache = (CacheObject) iterator.next();
+                    arrList.add(objInCache.getValue());
+                }
             }
         }
         return arrList;
