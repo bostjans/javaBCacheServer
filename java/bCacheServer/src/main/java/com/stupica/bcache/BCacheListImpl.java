@@ -11,7 +11,14 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class BCacheListImpl extends BCacheBase implements BCacheList {
 
+    private final boolean bIsFeatureCacheCopy = true;
+
+    private final long nCacheCopyMaxOld = 1000 * 33;    // 33 sec
+    private long nTsLastCleanUpCacheCopy = 0L;
+
     public Map<String, BStoreList> mapCache = null;
+    private Map<String, List> mapCacheCopy = null;
+    private volatile Map<String, Long> mapCacheLastRefresh = null;
 
 
     //public BCacheListImpl() throws RemoteException {
@@ -21,8 +28,13 @@ public class BCacheListImpl extends BCacheBase implements BCacheList {
     private BStoreList getCache(String asId) {
         BStoreList objCache = null;
 
-        if (mapCache == null)
+        if (mapCache == null) {
             mapCache = new ConcurrentHashMap<>();
+            if (bIsFeatureCacheCopy) {
+                mapCacheCopy = new ConcurrentHashMap<>();
+                mapCacheLastRefresh = new ConcurrentHashMap<>();
+            }
+        }
         objCache = (BStoreList) mapCache.get(asId);
         if (objCache == null) {
             objCache = new MemoryBList();
@@ -105,21 +117,40 @@ public class BCacheListImpl extends BCacheBase implements BCacheList {
         return getListInternal(asId);
     }
     public List getValueAsList(String asId) {
+        boolean         bShouldRebuild = false;
+        Long            nTsLastCacheCopyBuild;
         List<Object>    arrListCache = null;
         List<Object>    arrList = null;
         //BStoreList      objCache = getCache(asId);
 
         nCountCalls.incrementAndGet();
         nCountListCalls.incrementAndGet();
-        arrListCache = getListInternal(asId);
-        if (arrListCache != null) {
-            arrList = new ArrayList<>();
-            synchronized(arrListCache) {
-                //for (Object objLoop : objCache.getList()) {
-                for (Iterator<Object> iterator = arrListCache.iterator(); iterator.hasNext();) {
-                    //CacheObject objInCache = (CacheObject) objLoop;
-                    CacheObject objInCache = (CacheObject) iterator.next();
-                    arrList.add(objInCache.getValue());
+        if (mapCacheLastRefresh != null) {
+            nTsLastCacheCopyBuild = mapCacheLastRefresh.get(asId);
+            if (nTsLastCacheCopyBuild == null)
+                bShouldRebuild = true;
+            else {
+                if ((nTsLastCacheCopyBuild + nCacheCopyMaxOld) < System.currentTimeMillis())
+                    bShouldRebuild = true;
+                else
+                    arrList = mapCacheCopy.get(asId);
+            }
+        }
+        if ((bShouldRebuild) || (arrList == null)) {
+            arrListCache = getListInternal(asId);
+            if (arrListCache != null) {
+                arrList = new ArrayList<>();
+                synchronized(arrListCache) {
+                    //for (Object objLoop : objCache.getList()) {
+                    for (Iterator<Object> iterator = arrListCache.iterator(); iterator.hasNext();) {
+                        //CacheObject objInCache = (CacheObject) objLoop;
+                        CacheObject objInCache = (CacheObject) iterator.next();
+                        arrList.add(objInCache.getValue());
+                    }
+                }
+                if (mapCacheCopy != null) {
+                    mapCacheCopy.put(asId, arrList);
+                    mapCacheLastRefresh.put(asId, Long.valueOf(System.currentTimeMillis()));
                 }
             }
         }
