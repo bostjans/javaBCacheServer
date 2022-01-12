@@ -56,7 +56,7 @@ public class MainRun extends MainRunBase {
     public static void main(String[] a_args) {
         // Initialization
         GlobalVar.getInstance().sProgName = "bCacheServer";
-        GlobalVar.getInstance().sVersionBuild = "029";
+        GlobalVar.getInstance().sVersionBuild = "031";
         // Ref.: https://stackoverflow.com/questions/6314285/java-util-logging-stops-working-after-a-while
         logger = Logger.getLogger(GlobalVar.getInstance().sProgName);
 
@@ -350,61 +350,66 @@ public class MainRun extends MainRunBase {
         if (iResult == ConstGlobal.RETURN_OK) {
             if (objServerMap == null) {
                 msgWarn("runLoopCycle(): No server(map) running (null).");
-            }
-            if (objServerMap.mapCache == null) {
-                sTemp = "runLoopCycle(): Map: No data (null).";
-                if (bShouldWriteLoopInfo2stdOut)
-                    msgInfo(sTemp);
-                if (bShouldWriteLoopInfo2log)
-                    logger.info(sTemp);
             } else {
-                sTemp = "Num. of maps: " + objServerMap.mapCache.size()
-                        + "; calls(all): " + objServerMap.getCountCalls()
-                        + "; calls(map): " + objServerMap.getCountMapCalls()
-                        + "; pings: " + objServerMap.getCountPing()
-                        + "\n\tmaps: " + objServerMap.mapCache.keySet();
-                if (aobjRefCountData.iCountLoop % 3 == 0) {
-                    //if (objServerMap.mapCache.keySet().size() > 0) {
-                    //    sTemp += "";
-                    //}
-                    for (String sLoop : objServerMap.mapCache.keySet()) {
-                        BCache objCache = objServerMap.mapCache.get(sLoop);
-                        sTemp += "\n> ";
-                        sTemp += "{" + sLoop + ": " + objCache.toStringShort() + "}";
+                if (objServerMap.mapCache == null) {
+                    sTemp = "runLoopCycle(): Map: No data (null).";
+                    if (bShouldWriteLoopInfo2stdOut)
+                        msgInfo(sTemp);
+                    if (bShouldWriteLoopInfo2log)
+                        logger.info(sTemp);
+                } else {
+                    sTemp = "Num. of maps: " + objServerMap.mapCache.size()
+                            + "; calls(all): " + objServerMap.getCountCalls()
+                            + "; calls(map): " + objServerMap.getCountMapCalls()
+                            + "; pings: " + objServerMap.getCountPing()
+                            + "\n\tmaps: " + objServerMap.mapCache.keySet();
+                    if (aobjRefCountData.iCountLoop % 5 == 0) {
+                        for (String sLoop : objServerMap.mapCache.keySet()) {
+                            BCache objCache = objServerMap.mapCache.get(sLoop);
+                            sTemp += "\n> ";
+                            sTemp += "{" + sLoop + ": " + objCache.toStringShort() + "}";
+                        }
                     }
+                    if (bShouldWriteLoopInfo2stdOut)
+                        msgInfo("runLoopCycle(map): " + sTemp);
+                    if (bShouldWriteLoopInfo2log)
+                        logger.info("runLoopCycle(map): " + sTemp);
                 }
-                if (bShouldWriteLoopInfo2stdOut)
-                    msgInfo("runLoopCycle(map): " + sTemp);
-                if (bShouldWriteLoopInfo2log)
-                    logger.info("runLoopCycle(map): " + sTemp);
             }
             //
             if (objServerList == null) {
                 msgWarn("runLoopCycle(): No server(list) running (null).");
-            }
-            if (objServerList.mapCache == null) {
-                sTemp = "runLoopCycle(): List: No data (null).";
-                if (bShouldWriteLoopInfo2stdOut)
-                    msgInfo(sTemp);
-                if (bShouldWriteLoopInfo2log)
-                    logger.info(sTemp);
             } else {
-                sTemp = "Num. of lists: " + objServerList.mapCache.size()
-                        + "; calls(all): " + objServerList.getCountCalls()
-                        + "; calls(list): " + objServerList.getCountListCalls()
-                        + "; pings: " + objServerList.getCountPing()
-                        + "\n\tlists: " + objServerList.mapCache.keySet();
-                if (aobjRefCountData.iCountLoop % 10 == 0) {
-                    for (String sLoop : objServerList.mapCache.keySet()) {
-                        BStoreList objCache = objServerList.mapCache.get(sLoop);
-                        sTemp += "\n> ";
-                        sTemp += "{" + sLoop + ": " + objCache.toStringShort() + "}";
+                if (BCacheListService.getInstance().mapCache == null) {
+                    sTemp = "runLoopCycle(): List: No data (null).";
+                    if (bShouldWriteLoopInfo2stdOut)
+                        msgInfo(sTemp);
+                    if (bShouldWriteLoopInfo2log)
+                        logger.info(sTemp);
+                } else {
+                    sTemp = "Num. of lists: " + BCacheListService.getInstance().mapCache.size()
+                            + "; calls(all): " + objServerList.getCountCalls()
+                            + "; calls(list): " + objServerList.getCountListCalls()
+                            + "; pings: " + objServerList.getCountPing()
+                            + "; hit: " + BCacheListService.getInstance().getCountCacheHit()
+                            + "; miss: " + BCacheListService.getInstance().getCountCacheMiss()
+                            + "; hit(copy): " + BCacheListService.getInstance().getCountCacheCopyHit()
+                            + "\n\tlists: " + BCacheListService.getInstance().mapCache.keySet();
+                    if (aobjRefCountData.iCountLoop % 10 == 0) {
+                        for (String sLoop : BCacheListService.getInstance().mapCache.keySet()) {
+                            BStoreList objCache = BCacheListService.getInstance().mapCache.get(sLoop);
+                            sTemp += "\n> ";
+                            sTemp += "{" + sLoop + ": " + objCache.toStringShort() + "}";
+                        }
+                    }
+                    if (bShouldWriteLoopInfo2stdOut)
+                        msgInfo("runLoopCycle(list): " + sTemp);
+                    if (bShouldWriteLoopInfo2log)
+                        logger.info("runLoopCycle(list): " + sTemp);
+                    if (aobjRefCountData.iCountLoop % 22 == 0) {
+                        BCacheListService.getInstance().cleanUpCopy();
                     }
                 }
-                if (bShouldWriteLoopInfo2stdOut)
-                    msgInfo("runLoopCycle(list): " + sTemp);
-                if (bShouldWriteLoopInfo2log)
-                    logger.info("runLoopCycle(list): " + sTemp);
             }
         }
         return iResult;
