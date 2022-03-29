@@ -4,10 +4,10 @@
 
     <!-- project coordinates .. -->
     <groupId>com.stupica.bCache</groupId>
-    <artifactId>bCacheProject</artifactId>
-    <version>0.6.2</version>
-    <packaging>pom</packaging>
-    <name>bCacheServer</name>
+    <artifactId>bCacheDump</artifactId>
+    <version>0.1.0</version>
+    <packaging>jar</packaging>
+    <name>bCacheDump</name>
     <organization>
         <name>developer.stupica.com</name>
         <url>http://www.stupica.com</url>
@@ -18,33 +18,39 @@
         <java-version>1.8</java-version>
         <maven.compiler.source>${java-version}</maven.compiler.source>
         <maven.compiler.target>${java-version}</maven.compiler.target>
-
-        <!-- ID identifier - in settings.xml: servers -->
-        <project.scm.id>github</project.scm.id>
     </properties>
 
-	<modules>
-        <module>bCacheInterface</module>
-        <module>bCacheServer</module>
-        <module>bCacheClient</module>
-        <module>bCacheTestClient01</module>
-        <module>bCacheDump</module>
-	</modules>
+    <!-- library dependencies -->
+    <dependencies>
+        <dependency>
+            <groupId>com.stupica.bCache</groupId>
+            <artifactId>bCacheClient</artifactId>
+            <version>[0.5.3,2)</version>
+        </dependency>
+        <dependency>
+            <groupId>com.stupica.lenkoTr</groupId>
+            <artifactId>dbModel</artifactId>
+            <version>1.7.1</version>
+        </dependency>
+    </dependencies>
 
-    <profiles>
-        <profile>
-            <id>testCacheEHcache</id>
-            <modules>
-                <module>testCacheEHcache</module>
-            </modules>
-        </profile>
-        <profile>
-            <id>testCacheHz</id>
-            <modules>
-                <module>testCacheHz</module>
-            </modules>
-        </profile>
-    </profiles>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.2.0</version>
+                <configuration>
+                    <archive>
+                        <manifestEntries>
+                            <Implementation-Version>${project.version}</Implementation-Version>
+                            <Specification-Version>${project.version}</Specification-Version>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
     <developers>
         <developer>
