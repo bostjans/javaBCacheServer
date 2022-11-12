@@ -5,7 +5,7 @@
     <!-- project coordinates .. -->
     <groupId>com.stupica.bCache</groupId>
     <artifactId>bCacheServer</artifactId>
-    <version>0.6.2</version>
+    <version>0.6.4</version>
     <packaging>jar</packaging>
     <name>bCacheServer</name>
     <organization>
@@ -61,7 +61,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>3.2.2</version>
+                <version>3.3.0</version>
                 <configuration>
                     <archive>
                         <manifest>
@@ -77,7 +77,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>3.3.0</version>
+                <version>3.4.1</version>
                 <executions>
                     <execution>
                         <phase>package</phase>
@@ -116,6 +116,58 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>com.google.cloud.tools</groupId>
+                <artifactId>jib-maven-plugin</artifactId>
+                <version>3.3.1</version>
+                <configuration>
+                    <!--
+                    <from> <image>openjdk:alpine</image> </from> -->
+                    <to>
+                        <!--
+                        <image>bcache/bcacheserver:${project.version}</image>
+                        <image>repo.stupica.com/bcacheserver:${project.version}</image>
+                        <image>docker.io/bostjans/bcacheserver:${project.version}</image>
+                        -->
+                        <image>bostjans/bcacheserver:${project.version}</image>
+                    </to>
+                    <containerizingMode>packaged</containerizingMode>
+                    <container>
+                        <ports>
+                            <port>13111</port>
+                            <port>13112</port>
+                        </ports>
+                        <jvmFlags>
+                            <jvmFlag>-server</jvmFlag>
+                            <jvmFlag>-Xms264m</jvmFlag>
+                            <jvmFlag>-Xmx986m</jvmFlag>
+                            <jvmFlag>-Djava.util.logging.config.file=/app/conf/logging.properties</jvmFlag>
+                        </jvmFlags>
+                        <mainClass>com.stupica.bcacheserver.MainRun</mainClass>
+                        <args>
+                            <arg>-v</arg>
+                        </args>
+                        <!--
+                        <environment>
+                            <ENV_VAR>VALUE</ENV_VAR>
+                        </environment> -->
+                        <user>nobody</user>
+                    </container>
+                    <extraDirectories>
+                        <paths>
+                            <path>
+                                <from>src/main/resources/</from>
+                                <into>/app/log</into>
+                            </path>
+                            <path>
+                                <from>src/main/resources/</from>
+                                <into>/app/conf</into>
+                            </path>
+                        </paths>
+                    </extraDirectories>
+                </configuration>
             </plugin>
         </plugins>
     </build>
