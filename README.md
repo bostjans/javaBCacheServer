@@ -10,3 +10,5 @@ Java (B)Cache server > to serve/centralize cache.
 * https://cruftex.net/2017/09/01/Java-Caching-Benchmarks-Part-3.html
 * https://infinispan.org/blog/tags/benchmarks/
 * https://redis.io/topics/benchmarks
+* https://docs.keydb.dev
+* https://dragonflydb.io
