@@ -5,7 +5,7 @@
     <!-- project coordinates .. -->
     <groupId>com.stupica.bCache</groupId>
     <artifactId>bCacheServer</artifactId>
-    <version>0.6.4</version>
+    <version>0.6.5</version>
     <packaging>jar</packaging>
     <name>bCacheServer</name>
     <organization>
@@ -135,6 +135,7 @@
                     </to>
                     <containerizingMode>packaged</containerizingMode>
                     <container>
+                        <appRoot>/opt/app</appRoot>
                         <ports>
                             <port>13111</port>
                             <port>13112</port>
@@ -143,9 +144,12 @@
                             <jvmFlag>-server</jvmFlag>
                             <jvmFlag>-Xms264m</jvmFlag>
                             <jvmFlag>-Xmx986m</jvmFlag>
-                            <jvmFlag>-Djava.util.logging.config.file=/app/conf/logging.properties</jvmFlag>
+                            <jvmFlag>-Djava.util.logging.config.file=/opt/app/conf/logging.properties</jvmFlag>
                         </jvmFlags>
                         <mainClass>com.stupica.bcacheserver.MainRun</mainClass>
+                        <!--
+                        <entrypoint>/opt/app/run_containter.sh</entrypoint>
+                        -->
                         <args>
                             <arg>-v</arg>
                         </args>
@@ -158,14 +162,21 @@
                     <extraDirectories>
                         <paths>
                             <path>
-                                <from>src/main/resources/</from>
-                                <into>/app/log</into>
+                                <from>src/main/assembly/</from>
+                                <into>/opt/app/log</into>
                             </path>
                             <path>
-                                <from>src/main/resources/</from>
-                                <into>/app/conf</into>
+                                <from>src/main/resources.jib/</from>
+                                <into>/opt/app/conf</into>
                             </path>
                         </paths>
+                        <permissions>
+                            <permission>
+                                <file>/opt/app/log</file>
+                                <mode>757</mode>
+                                <!-- Does NOT work, as permission can be set only to file, not to dir.! -->
+                            </permission>
+                        </permissions>
                     </extraDirectories>
                 </configuration>
             </plugin>
