@@ -34,8 +34,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, do not need to create;
         with:
-          tag_name: r0_6_7
-          release_name: Release_0.6.7
+          tag_name: r0_6_8
+          release_name: Release_0.6.8
           body: |
             Release - ${{ github.ref }} Stable Build.
           draft: false
