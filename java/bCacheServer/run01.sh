@@ -29,6 +29,6 @@ VMparam="-Djava.util.logging.config.file=$LOG_CONF $VMparam"
 
 nohup java $VMparam -jar $PATH_PROG/bCacheServer.jar -v
 
-echo That_s it.
+echo "That_s it."
 
 exit 0

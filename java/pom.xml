@@ -5,9 +5,9 @@
     <!-- project coordinates .. -->
     <groupId>com.stupica.bCache</groupId>
     <artifactId>bCacheProject</artifactId>
-    <version>0.6.5</version>
+    <version>0.6.6</version>
     <packaging>pom</packaging>
-    <name>bCacheServer</name>
+    <name>bCacheServerProject</name>
     <organization>
         <name>developer.stupica.com</name>
         <url>http://www.stupica.com</url>

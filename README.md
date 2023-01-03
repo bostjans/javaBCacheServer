@@ -14,7 +14,7 @@ Look in Releases.
 ```
 docker run --name bCacheSrv01 --rm --cpus=2 -m 1512m --memory-reservation=956m \
   -p 13111:13111 -p 13112:13112 \
-  bostjans/bcacheserver:0.6.5
+  bostjans/bcacheserver:0.6.6
 ```
 
 
