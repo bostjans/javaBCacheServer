@@ -27,20 +27,19 @@ jobs:
       - name: Build with Maven
         run: mvn -B package --file java/pom.xml
       - name: Build DockerImage with Maven
-        run: mvn -B jib:build --file java/bCacheServer/pom.xml
+        run: mvn -B jib:buildTar --file java/bCacheServer/pom.xml
       - name: CreateRelease
         id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, do not need to create;
         with:
-          tag_name: r0_6_6
-          release_name: Release_0.6.6
+          tag_name: r0_6_7
+          release_name: Release_0.6.7
           body: |
-            Release - ${{ github.ref }}
-            Beta Build.
+            Release - ${{ github.ref }} Stable Build.
           draft: false
-          prerelease: true
+          prerelease: false
 
       - name: Upload Release Asset
         id: upload-release-asset
@@ -48,7 +47,21 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
+          # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object,
+          # which include a `upload_url`.
+          # See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: java/bCacheServer/target/bCacheServer.zip
           asset_name: bCacheServer.zip
           asset_content_type: application/zip
+
+      - name: Upload Release Asset#02
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: java/bCacheServer/target/jib-image.tar
+          asset_name: bCacheServerDockerImage.tar
+          asset_content_type: application/octet-stream
