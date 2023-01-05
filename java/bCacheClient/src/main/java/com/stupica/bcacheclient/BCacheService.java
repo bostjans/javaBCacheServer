@@ -1,6 +1,7 @@
 package com.stupica.bcacheclient;
 
 import com.stupica.ConstGlobal;
+import com.stupica.GlobalVar;
 
 import java.net.MalformedURLException;
 import java.rmi.ConnectException;
@@ -110,11 +111,15 @@ public class BCacheService {
 
         nCountConnect++;
         try {
-            if (asService.contentEquals(BCacheMap.sUrlRmiNameBCache))
+            if (asService.contentEquals(BCacheMap.sUrlRmiNameBCache)) {
+                if (GlobalVar.bIsModeVerbose)
+                    logger.info("connectService(): lookup for: " + sURI + asService);
                 objCache = (BCacheMap) Naming.lookup(sURI + asService);
-            else if (asService.contentEquals(BCacheList.sUrlRmiNameBCache))
+            } else if (asService.contentEquals(BCacheList.sUrlRmiNameBCache)) {
+                if (GlobalVar.bIsModeVerbose)
+                    logger.info("connectService(): lookup for: " + sURI + asService);
                 objCacheList = (BCacheList) Naming.lookup(sURI + asService);
-            else
+            } else
                 logger.severe("connectService(): service: " + asService + "; Msg.: /");
         } catch (NotBoundException e) {
             logger.severe("connect(): URI: " + sURI

@@ -5,7 +5,7 @@
     <!-- project coordinates .. -->
     <groupId>com.stupica.bCache</groupId>
     <artifactId>bCacheProject</artifactId>
-    <version>0.6.8</version>
+    <version>0.6.9</version>
     <packaging>pom</packaging>
     <name>bCacheServerProject</name>
     <organization>

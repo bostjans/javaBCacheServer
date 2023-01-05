@@ -30,6 +30,7 @@ public class MainRun extends MainRunBase {
     private long    iTimeElapsedStopLimit = 0;
 
     private int     iPort = 13111;
+    private String  sRmiHostName = "localhost";
 
     /**
      * Main object instance variable;
@@ -56,7 +57,7 @@ public class MainRun extends MainRunBase {
     public static void main(String[] a_args) {
         // Initialization
         GlobalVar.getInstance().sProgName = "bCacheServer";
-        GlobalVar.getInstance().sVersionBuild = "036";
+        GlobalVar.getInstance().sVersionBuild = "037";
         // Ref.: https://stackoverflow.com/questions/6314285/java-util-logging-stops-working-after-a-while
         logger = Logger.getLogger(GlobalVar.getInstance().sProgName);
 
@@ -179,6 +180,10 @@ public class MainRun extends MainRunBase {
             Integer iTemp = (Integer)obj_parser.getOptionValue(obj_op_port, iPort);
             iPort = iTemp.intValue();
         }
+        // Check previous step
+        if (iResult == ConstGlobal.RETURN_OK) {
+            sRmiHostName = System.getProperty("java.rmi.server.hostname", sRmiHostName);
+        }
         return iResult;
     }
 
@@ -199,7 +204,9 @@ public class MainRun extends MainRunBase {
         iResult = super.runBefore();
 
         // Init ..
-        System.setProperty("java.rmi.server.hostname", "localhost");
+        System.setProperty("java.rmi.server.hostname", sRmiHostName);
+        if (GlobalVar.bIsModeVerbose)
+            System.setProperty("java.rmi.server.logCalls", "true");
 
         // Check ..
         //

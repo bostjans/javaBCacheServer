@@ -5,7 +5,7 @@
     <!-- project coordinates .. -->
     <groupId>com.stupica.bCache</groupId>
     <artifactId>bCacheServer</artifactId>
-    <version>0.6.8</version>
+    <version>0.6.9</version>
     <packaging>jar</packaging>
     <name>bCacheServer</name>
     <organization>
@@ -153,10 +153,9 @@
                         <args>
                             <arg>-v</arg>
                         </args>
-                        <!--
                         <environment>
-                            <ENV_VAR>VALUE</ENV_VAR>
-                        </environment> -->
+                            <ENV_RMI_HOSTNAME>localhost</ENV_RMI_HOSTNAME>
+                        </environment>
                         <user>nobody</user>
                     </container>
                     <extraDirectories>
