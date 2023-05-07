@@ -25,17 +25,15 @@ jobs:
         with:
           repositories: '[{ "id": "bDev", "url": "https://developer.dev404.net/maven" }]'
       - name: Build with Maven
-        run: mvn -B package --file java/pom.xml
-      - name: Build DockerImage with Maven
-        run: mvn -B jib:buildTar --file java/bCacheServer/pom.xml
+        run: mvn -B package --file java/pom.xml -P buildContainer
       - name: CreateRelease
         id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, do not need to create;
         with:
-          tag_name: r0_6_9
-          release_name: Release_0.6.9
+          tag_name: r0_7_0
+          release_name: Release_0.7.0
           body: |
             Release - ${{ github.ref }} Stable Build.
           draft: false

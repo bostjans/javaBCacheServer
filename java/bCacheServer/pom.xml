@@ -19,6 +19,8 @@
         <maven.compiler.source>${java-version}</maven.compiler.source>
         <maven.compiler.target>${java-version}</maven.compiler.target>
 
+        <jib-version>3.3.1</jib-version>
+
         <!-- ID identifier - in settings.xml: servers -->
         <project.scm.id>github</project.scm.id>
     </properties>
@@ -117,70 +119,87 @@
                     </execution>
                 </executions>
             </plugin>
-
-            <plugin>
-                <groupId>com.google.cloud.tools</groupId>
-                <artifactId>jib-maven-plugin</artifactId>
-                <version>3.3.1</version>
-                <configuration>
-                    <!--
-                    <from> <image>openjdk:alpine</image> </from> -->
-                    <to>
-                        <!--
-                        <image>bcache/bcacheserver:${project.version}</image>
-                        <image>repo.stupica.com/bcacheserver:${project.version}</image>
-                        <image>docker.io/bostjans/bcacheserver:${project.version}</image>
-                        -->
-                        <image>bostjans/bcacheserver:${project.version}</image>
-                    </to>
-                    <containerizingMode>packaged</containerizingMode>
-                    <container>
-                        <appRoot>/opt/app</appRoot>
-                        <ports>
-                            <port>13111</port>
-                            <port>13112</port>
-                        </ports>
-                        <jvmFlags>
-                            <jvmFlag>-server</jvmFlag>
-                            <jvmFlag>-Xms264m</jvmFlag>
-                            <jvmFlag>-Xmx1186m</jvmFlag>
-                            <jvmFlag>-Djava.util.logging.config.file=/opt/app/conf/logging.properties</jvmFlag>
-                        </jvmFlags>
-                        <mainClass>com.stupica.bcacheserver.MainRun</mainClass>
-                        <!--
-                        <entrypoint>/opt/app/run_containter.sh</entrypoint>
-                        -->
-                        <args>
-                            <arg>-v</arg>
-                        </args>
-                        <environment>
-                            <ENV_RMI_HOSTNAME>localhost</ENV_RMI_HOSTNAME>
-                        </environment>
-                        <user>nobody</user>
-                    </container>
-                    <extraDirectories>
-                        <paths>
-                            <path>
-                                <from>src/main/assembly/</from>
-                                <into>/opt/app/log</into>
-                            </path>
-                            <path>
-                                <from>src/main/resources.jib/</from>
-                                <into>/opt/app/conf</into>
-                            </path>
-                        </paths>
-                        <permissions>
-                            <permission>
-                                <file>/opt/app/log</file>
-                                <mode>757</mode>
-                                <!-- Does NOT work, as permission can be set only to file, not to dir.! -->
-                            </permission>
-                        </permissions>
-                    </extraDirectories>
-                </configuration>
-            </plugin>
         </plugins>
     </build>
+    <profiles>
+        <profile>
+            <id>buildContainer</id>
+            <activation><activeByDefault>false</activeByDefault></activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.google.cloud.tools</groupId>
+                        <artifactId>jib-maven-plugin</artifactId>
+                        <version>${jib-version}</version>
+                        <configuration>
+                            <!--
+                            <from> <image>openjdk:alpine</image> </from> -->
+                            <to>
+                                <!--
+                                <image>bcache/bcacheserver:${project.version}</image>
+                                <image>repo.stupica.com/bcacheserver:${project.version}</image>
+                                <image>docker.io/bostjans/bcacheserver:${project.version}</image>
+                                -->
+                                <image>bostjans/bcacheserver:${project.version}</image>
+                            </to>
+                            <containerizingMode>packaged</containerizingMode>
+                            <container>
+                                <appRoot>/opt/app</appRoot>
+                                <ports>
+                                    <port>13111</port>
+                                    <port>13112</port>
+                                </ports>
+                                <jvmFlags>
+                                    <jvmFlag>-server</jvmFlag>
+                                    <jvmFlag>-Xms264m</jvmFlag>
+                                    <jvmFlag>-Xmx1186m</jvmFlag>
+                                    <jvmFlag>-Djava.util.logging.config.file=/opt/app/conf/logging.properties</jvmFlag>
+                                </jvmFlags>
+                                <mainClass>com.stupica.bcacheserver.MainRun</mainClass>
+                                <!--
+                                <entrypoint>/opt/app/run_containter.sh</entrypoint>
+                                -->
+                                <args>
+                                    <arg>-v</arg>
+                                </args>
+                                <environment>
+                                    <ENV_RMI_HOSTNAME>localhost</ENV_RMI_HOSTNAME>
+                                </environment>
+                                <user>nobody</user>
+                            </container>
+                            <extraDirectories>
+                                <paths>
+                                    <path>
+                                        <from>src/main/assembly/</from>
+                                        <into>/opt/app/log</into>
+                                    </path>
+                                    <path>
+                                        <from>src/main/resources.jib/</from>
+                                        <into>/opt/app/conf</into>
+                                    </path>
+                                </paths>
+                                <permissions>
+                                    <permission>
+                                        <file>/opt/app/log</file>
+                                        <mode>757</mode>
+                                        <!-- Does NOT work, as permission can be set only to file, not to dir.! -->
+                                    </permission>
+                                </permissions>
+                            </extraDirectories>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>buildTar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 
     <developers>
         <developer>
