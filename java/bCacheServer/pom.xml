@@ -5,21 +5,21 @@
     <!-- project coordinates .. -->
     <groupId>com.stupica.bCache</groupId>
     <artifactId>bCacheServer</artifactId>
-    <version>0.6.9</version>
+    <version>0.7.1</version>
     <packaging>jar</packaging>
     <name>bCacheServer</name>
     <organization>
-        <name>developer.stupica.com</name>
+        <name>developer.dev404.net</name>
         <url>http://www.stupica.com</url>
     </organization>
-    <url>http://developer.stupica.com/maven/</url>
+    <url>http://developer.dev404.net/maven/</url>
 
     <properties>
         <java-version>1.8</java-version>
         <maven.compiler.source>${java-version}</maven.compiler.source>
         <maven.compiler.target>${java-version}</maven.compiler.target>
 
-        <jib-version>3.3.1</jib-version>
+        <jib-version>3.4.0</jib-version>
 
         <!-- ID identifier - in settings.xml: servers -->
         <project.scm.id>github</project.scm.id>
@@ -30,7 +30,7 @@
         <dependency>
             <groupId>com.stupica.base</groupId>
             <artifactId>mainRunner</artifactId>
-            <version>[1.6.1,2)</version>
+            <version>[1.6.2,2)</version>
         </dependency>
         <dependency>
             <groupId>com.stupica.base</groupId>
@@ -136,14 +136,17 @@
                             <from> <image>openjdk:alpine</image> </from> -->
                             <to>
                                 <!--
-                                <image>bcache/bcacheserver:${project.version}</image>
-                                <image>repo.stupica.com/bcacheserver:${project.version}</image>
-                                <image>docker.io/bostjans/bcacheserver:${project.version}</image>
+                                <image>docker-push.stupica.com/dev404/bcacheserver</image>
                                 -->
                                 <image>bostjans/bcacheserver:${project.version}</image>
+                                <tags>
+                                    <tag>${project.version}</tag>
+                                    <tag>latest</tag>
+                                </tags>
                             </to>
                             <containerizingMode>packaged</containerizingMode>
                             <container>
+                                <creationTime>USE_CURRENT_TIMESTAMP</creationTime>
                                 <appRoot>/opt/app</appRoot>
                                 <ports>
                                     <port>13111</port>

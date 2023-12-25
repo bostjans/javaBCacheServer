@@ -9,10 +9,10 @@
     <packaging>jar</packaging>
     <name>bCacheClient</name>
     <organization>
-        <name>developer.stupica.com</name>
+        <name>developer.dev404.net</name>
         <url>http://www.stupica.com</url>
     </organization>
-    <url>http://developer.stupica.com/maven/</url>
+    <url>http://developer.dev404.net/maven/</url>
 
     <properties>
         <java-version>1.8</java-version>
@@ -44,7 +44,7 @@
         <repository>
             <id>bDevRelease</id>
             <name>Developer404 Repository</name>
-            <url>http://developer.stupica.com/maven</url>
+            <url>http://developer.dev404.net/maven</url>
             <snapshots>
                 <enabled>false</enabled>
             </snapshots>
