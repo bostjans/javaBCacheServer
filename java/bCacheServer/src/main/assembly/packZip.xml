@@ -13,8 +13,19 @@
             <outputDirectory>./</outputDirectory>
             <includes>
                 <include>bCacheServer.jar</include>
+                <!--
+                <include>bCacheServer-${project.version}.jar</include>
+                -->
             </includes>
-        </fileSet>
+        </fileSet> <!--
+        <fileSet>
+            <directory>./target/lib/</directory>
+            <useDefaultExcludes>true</useDefaultExcludes>
+            <outputDirectory>./lib/</outputDirectory>
+            <includes>
+                <include>*.jar</include>
+            </includes>
+        </fileSet> -->
         <fileSet>
             <directory>../../</directory>
             <useDefaultExcludes>true</useDefaultExcludes>

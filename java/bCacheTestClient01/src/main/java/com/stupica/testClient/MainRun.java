@@ -13,7 +13,7 @@ import java.util.logging.Logger;
 
 public class MainRun {
 
-    int     aiNumberOfElementMax = 1000000;
+    int     iNumberOfElementMax = 1000000;
     String  sMapName01 = "map01";
 
     BCacheService objBCache = null;
@@ -34,7 +34,7 @@ public class MainRun {
 
         // Initialization
         GlobalVar.getInstance().sProgName = "bCacheTestClient01";
-        GlobalVar.getInstance().sVersionBuild = "011";
+        GlobalVar.getInstance().sVersionBuild = "012";
 
         // Generate main program class
         objInstance = new MainRun();
@@ -68,6 +68,7 @@ public class MainRun {
         //iResult = super.run();
 
         objBCache = new BCacheService();
+        objBCache.sHost = "lukna.golem.si";
         objBCache.sPort = "13111";
         //iResult = objBCache.connect();
         objCache = objBCache.getCache();
@@ -89,12 +90,15 @@ public class MainRun {
 
         // Check previous step
         if (iResult == ConstGlobal.RETURN_OK) {
-            add11(objCache);
+            add11(objCache, 1);
+        }
+        if (iResult == ConstGlobal.RETURN_OK) {
+            add11(objCache, iNumberOfElementMax);
         }
         return iResult;
     }
 
-    public void add11(BCacheMap aobjCache) {
+    public void add11(BCacheMap aobjCache, int aiNumberOfElementMax) {
         // Local variables
         int         iResult;
         boolean     bResult = false;

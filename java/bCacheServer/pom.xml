@@ -5,7 +5,7 @@
     <!-- project coordinates .. -->
     <groupId>com.stupica.bCache</groupId>
     <artifactId>bCacheServer</artifactId>
-    <version>0.7.1</version>
+    <version>0.7.2</version>
     <packaging>jar</packaging>
     <name>bCacheServer</name>
     <organization>
@@ -59,7 +59,30 @@
     </dependencies>
 
     <build>
+        <!--
+        <finalName>${project.name}</finalName> -->
         <plugins>
+            <!--
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-dependencies</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/lib</outputDirectory>
+                            <overWriteReleases>false</overWriteReleases>
+                            <overWriteSnapshots>false</overWriteSnapshots>
+                            <overWriteIfNewer>true</overWriteIfNewer>
+                            <includeScope>runtime</includeScope>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin> -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
@@ -79,7 +102,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>3.4.1</version>
+                <version>3.5.1</version>
                 <executions>
                     <execution>
                         <phase>package</phase>
@@ -101,7 +124,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
-                <version>3.4.2</version>
+                <version>3.6.0</version>
                 <configuration>
                     <appendAssemblyId>false</appendAssemblyId>
                     <finalName>${project.name}</finalName>
@@ -157,6 +180,9 @@
                                     <jvmFlag>-Xms264m</jvmFlag>
                                     <jvmFlag>-Xmx1186m</jvmFlag>
                                     <jvmFlag>-Djava.util.logging.config.file=/opt/app/conf/logging.properties</jvmFlag>
+                                    <jvmFlag>-Djava.rmi.server.logCalls=false</jvmFlag>
+                                    <jvmFlag>-Djava.rmi.client.logCalls=false</jvmFlag>
+                                    <jvmFlag>-Djava.rmi.server.disableHttp=true</jvmFlag>
                                 </jvmFlags>
                                 <mainClass>com.stupica.bcacheserver.MainRun</mainClass>
                                 <!--
