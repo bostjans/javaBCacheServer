@@ -68,7 +68,7 @@ public class MainRun {
         //iResult = super.run();
 
         objBCache = new BCacheService();
-        objBCache.sHost = "lukna.golem.si";
+        //objBCache.sHost = "lukna.golem.si";
         objBCache.sPort = "13111";
         //iResult = objBCache.connect();
         objCache = objBCache.getCache();
