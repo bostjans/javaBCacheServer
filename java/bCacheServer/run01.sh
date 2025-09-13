@@ -36,17 +36,19 @@ fi
 #VMparam="-verbose:gc -XX:+PrintGCDetails -Xloggc:$PATH_LOG/gc-prog-01.log $VMparam"
 #VMparam="-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=6106 $VMparam"
 
+# Java.net
+#VMparam="-Djava.net.preferIPv4Stack=true $VMparam"
 # RMI
 VMparam="-Djava.rmi.server.logCalls=false $VMparam"
 VMparam="-Djava.rmi.client.logCalls=false $VMparam"
 VMparam="-Djava.rmi.server.disableHttp=true $VMparam"
 #VMparam="-Djava.rmi.server.codebase=file:///home/bcache/bin/bCache/dbModel-1.7.0.jar $VMparam"
 #VMparam="-Djava.rmi.server.useCodebaseOnly=false $VMparam"
+#VMparam="-Djava.rmi.server.hostname=127.0.0.1 $VMparam"
 # JMX
 #VMparam="-Dcom.sun.management.jmxremote.port=13001 $VMparam"
 #VMparam="-Dcom.sun.management.jmxremote.rmi.port=13001 $VMparam"
 #VMparam="-Dcom.sun.management.jmxremote.local.only=true $VMparam"
-#VMparam="-Djava.rmi.server.hostname=127.0.0.1 $VMparam"
 #VMparam="-Dcom.sun.management.jmxremote.ssl=false $VMparam"
 #VMparam="-Dcom.sun.management.jmxremote.authenticate=false $VMparam"
 

@@ -38,3 +38,5 @@ docker run --name bCacheSrv01 --rm --cpus=2 -m 1512m \
 * https://redis.io/topics/benchmarks
 * https://docs.keydb.dev
 * https://dragonflydb.io
+* <>
+* https://medium.com/javarevisited/why-we-built-our-own-cache-instead-of-using-redis-c9146acf4aed

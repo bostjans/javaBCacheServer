@@ -34,12 +34,15 @@ public class MainRun {
 
         // Initialization
         GlobalVar.getInstance().sProgName = "bCacheTestClient01";
-        GlobalVar.getInstance().sVersionBuild = "012";
+        GlobalVar.getInstance().sVersionBuild = "013";
 
         // Generate main program class
         objInstance = new MainRun();
 
-        iReturnCode = objInstance.run();
+        if ((a_args != null) && (a_args.length > 0) && (a_args[0] != null))
+            iReturnCode = objInstance.run(a_args[0]);
+        else
+            iReturnCode = objInstance.run(null);
         //iReturnCode = objInstance.invokeApp(a_args);
         //System.out.println("main(): ReturnCode: " + iReturnCode);
 
@@ -57,7 +60,7 @@ public class MainRun {
      *
      * @return int	1 = AllOK;
      */
-    public int run() {
+    public int run(String asHostname) {
         // Local variables
         int         iResult;
         BCacheMap   objCache = null;
@@ -68,7 +71,8 @@ public class MainRun {
         //iResult = super.run();
 
         objBCache = new BCacheService();
-        //objBCache.sHost = "lukna.golem.si";
+        if (asHostname != null)
+            objBCache.sHost = asHostname;
         objBCache.sPort = "13111";
         //iResult = objBCache.connect();
         objCache = objBCache.getCache();
